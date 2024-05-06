@@ -1,22 +1,48 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.jta</groupId>
     <artifactId>narayana-jta-all</artifactId>
     <version>5.13.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>narayana-jta-jakarta</artifactId>
   <name>Narayana: ArjunaJTA Jakarta narayana-jta-jakarta</name>
   <description>Narayana: ArjunaJTA Jakarta narayana-jta-jakarta (jta uber jar)</description>
-  <packaging>jar</packaging>
-
   <properties>
     <version.jakarta.transaction.jakarta.transaction-api>2.0.1</version.jakarta.transaction.jakarta.transaction-api>
     <version.jakarta.resource.jakarta.resource-api>2.0.0</version.jakarta.resource.jakarta.resource-api>
   </properties>
-  
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.narayana.jta</groupId>
+      <artifactId>narayana-jta</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss</groupId>
+      <artifactId>jboss-transaction-spi-jakarta</artifactId>
+      <version>${version.org.jboss.jboss-transaction-spi}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jboss.logging</groupId>
+          <artifactId>jboss-logging-spi</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.resource</groupId>
+      <artifactId>jakarta.resource-api</artifactId>
+      <version>${version.jakarta.resource.jakarta.resource-api}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.transaction</groupId>
+      <artifactId>jakarta.transaction-api</artifactId>
+      <version>${version.jakarta.transaction.jakarta.transaction-api}</version>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -30,16 +56,16 @@
             </goals>
             <configuration>
               <target>
-                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+                <property name="plugin_classpath" refid="maven.plugin.classpath" />
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
-                  <arg value="${org.jboss.narayana.jta:narayana-jta:jar}"/>
-                  <arg value="${project.build.directory}/${project.build.finalName}.jar"/>
-                  <arg value="-q"/>
-                  <arg value="-o"/>
-                  <arg value="-tr"/>
-                  <arg value="${project.basedir}/rules/jakarta-renames.properties"/>
+                  <arg value="${org.jboss.narayana.jta:narayana-jta:jar}" />
+                  <arg value="${project.build.directory}/${project.build.finalName}.jar" />
+                  <arg value="-q" />
+                  <arg value="-o" />
+                  <arg value="-tr" />
+                  <arg value="${project.basedir}/rules/jakarta-renames.properties" />
                   <classpath>
-                    <pathelement path="${plugin_classpath}"/>
+                    <pathelement path="${plugin_classpath}" />
                   </classpath>
                 </java>
               </target>
@@ -53,21 +79,17 @@
             </goals>
             <configuration>
               <target>
-                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
-                <ac:propertyregex xmlns:ac="antlib:net.sf.antcontrib" property="source"
-                               input="${org.jboss.narayana.jta:narayana-jta:jar}"
-                               regexp="\.jar$"
-                               replace="-sources.jar"
-                               global="true" />
+                <property name="plugin_classpath" refid="maven.plugin.classpath" />
+                <ac:propertyregex input="${org.jboss.narayana.jta:narayana-jta:jar}" regexp="\.jar$" xmlns:ac="antlib:net.sf.antcontrib" property="source" replace="-sources.jar" global="true" />
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
-                  <arg value="${source}"/>
-                  <arg value="${project.build.directory}/${project.build.finalName}-sources.jar"/>
-                  <arg value="-q"/>
-                  <arg value="-o"/>
-                  <arg value="-tr"/>
-                  <arg value="${project.basedir}/rules/jakarta-renames.properties"/>
+                  <arg value="${source}" />
+                  <arg value="${project.build.directory}/${project.build.finalName}-sources.jar" />
+                  <arg value="-q" />
+                  <arg value="-o" />
+                  <arg value="-tr" />
+                  <arg value="${project.basedir}/rules/jakarta-renames.properties" />
                   <classpath>
-                    <pathelement path="${plugin_classpath}"/>
+                    <pathelement path="${plugin_classpath}" />
                   </classpath>
                 </java>
               </target>
@@ -81,21 +103,17 @@
             </goals>
             <configuration>
               <target>
-                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
-                <ac:propertyregex xmlns:ac="antlib:net.sf.antcontrib" property="source"
-                               input="${org.jboss.narayana.jta:narayana-jta:jar}"
-                               regexp="\.jar$"
-                               replace="-javadoc.jar"
-                               global="true" />
+                <property name="plugin_classpath" refid="maven.plugin.classpath" />
+                <ac:propertyregex input="${org.jboss.narayana.jta:narayana-jta:jar}" regexp="\.jar$" xmlns:ac="antlib:net.sf.antcontrib" property="source" replace="-javadoc.jar" global="true" />
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
-                  <arg value="${source}"/>
-                  <arg value="${project.build.directory}/${project.build.finalName}-javadoc.jar"/>
-                  <arg value="-q"/>
-                  <arg value="-o"/>
-                  <arg value="-tr"/>
-                  <arg value="${project.basedir}/rules/jakarta-renames.properties"/>
+                  <arg value="${source}" />
+                  <arg value="${project.build.directory}/${project.build.finalName}-javadoc.jar" />
+                  <arg value="-q" />
+                  <arg value="-o" />
+                  <arg value="-tr" />
+                  <arg value="${project.basedir}/rules/jakarta-renames.properties" />
                   <classpath>
-                    <pathelement path="${plugin_classpath}"/>
+                    <pathelement path="${plugin_classpath}" />
                   </classpath>
                 </java>
               </target>
@@ -145,49 +163,12 @@
       </plugin>
     </plugins>
   </build>
-  
-  <dependencies>
-    <dependency>
-      <groupId>org.jboss.narayana.jta</groupId>
-      <artifactId>narayana-jta</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss</groupId>
-      <artifactId>jboss-transaction-spi-jakarta</artifactId>
-      <version>${version.org.jboss.jboss-transaction-spi}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.logging</groupId>
-          <artifactId>jboss-logging-spi</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.resource</groupId>
-      <artifactId>jakarta.resource-api</artifactId>
-      <version>${version.jakarta.resource.jakarta.resource-api}</version>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.transaction</groupId>
-      <artifactId>jakarta.transaction-api</artifactId>
-      <version>${version.jakarta.transaction.jakarta.transaction-api}</version>
-    </dependency>
-  </dependencies>
-
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <inherited>false</inherited>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
             <executions>
               <execution>
@@ -223,5 +204,4 @@
       </build>
     </profile>
   </profiles>
-
 </project>
