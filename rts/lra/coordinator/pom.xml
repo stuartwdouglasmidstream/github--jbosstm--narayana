@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.rts</groupId>
     <artifactId>lra-parent</artifactId>
     <version>5.13.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-
   <artifactId>lra-coordinator-jar</artifactId>
-  <packaging>jar</packaging>
   <name>LRA Coordinator jar</name>
-
   <properties>
     <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1]
             -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
     <lra.coordinator.path>lra-coordinator/lra-coordinator</lra.coordinator.path>
     <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.eclipse.microprofile.lra</groupId>
@@ -108,12 +103,10 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <finalName>lra-coordinator</finalName>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <showDeprecation>false</showDeprecation>
@@ -124,10 +117,10 @@
         <executions>
           <execution>
             <id>copy-dependencies</id>
+            <phase>test-compile</phase>
             <goals>
               <goal>copy-dependencies</goal>
             </goals>
-            <phase>test-compile</phase>
             <configuration>
               <stripVersion>true</stripVersion>
               <includeGroupIds>org.jboss.byteman</includeGroupIds>
@@ -137,7 +130,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <executions>
           <execution>
@@ -148,14 +140,8 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>codeCoverage</id>
@@ -191,15 +177,14 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
         </plugins>
       </build>
