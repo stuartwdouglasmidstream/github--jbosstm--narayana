@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <!-- JBoss, Home of Professional Open Source Copyright 2009, Red Hat Middleware
-		LLC, and individual contributors as indicated by the @author tags. See the
-		copyright.txt in the distribution for a full listing of individual contributors.
-		This copyrighted material is made available to anyone wishing to use, modify,
-		copy, or redistribute it subject to the terms and conditions of the GNU Lesser
-		General Public License, v. 2.1. This program is distributed in the hope that
-		it will be useful, but WITHOUT A WARRANTY; without even the implied warranty
-		of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
-		General Public License for more details. You should have received a copy
-		of the GNU Lesser General Public License, v.2.1 along with this distribution;
-		if not, write to the Free Software Foundation, Inc., 51 Franklin Street,
-		Fifth Floor, Boston, MA 02110-1301, USA. (C) 2009, @author JBoss Inc. (jonathan.halliday@redhat.com) -->
-
   <parent>
     <groupId>org.jboss</groupId>
     <artifactId>jboss-parent</artifactId>
@@ -161,113 +148,105 @@
       <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
-
   <properties>
-    <buildproperty.date>${maven.build.timestamp}</buildproperty.date>
-    <!-- Checkstyle is disabled by default, but it could be enabled for default by a particular module -->
+    <version.org.jboss.jboss-transaction-spi>7.6.1.Final</version.org.jboss.jboss-transaction-spi>
+    <version.org.jacoco>0.8.8</version.org.jacoco>
+    <version.javax.inject>1</version.javax.inject>
+    <version.org.jboss.logmanager>1.5.1.Final</version.org.jboss.logmanager>
+    <version.org.jboss.as.plugins.jboss-as-maven-plugin>7.4.Final</version.org.jboss.as.plugins.jboss-as-maven-plugin>
+    <version.org.jboss.spec.javax.xml.bind.jboss-jaxb-api_2.3_spec>2.0.1.Final</version.org.jboss.spec.javax.xml.bind.jboss-jaxb-api_2.3_spec>
+    <version.org.slf4j>1.7.30</version.org.slf4j>
+    <version.io.narayana.checkstyle-config>1.0.1.Final</version.io.narayana.checkstyle-config>
+    <version.mariadb>1.2.2</version.mariadb>
+    <version.org.jboss.arquillian.container.weld>3.0.2.Final</version.org.jboss.arquillian.container.weld>
+    <jvm.args.memory>-Xms64m -Xmx1024m</jvm.args.memory>
+    <version.org.eclipse.transformer>0.2.0</version.org.eclipse.transformer>
+    <jvm.args.debug></jvm.args.debug>
+    <version.org.jboss.arquillian.core>1.6.0.Final</version.org.jboss.arquillian.core>
+    <version.jaxb>2.3.0</version.jaxb>
+    <version.javax.javaee-api>8.0.1</version.javax.javaee-api>
+    <version.org.jboss.ws>1.1.2.Final</version.org.jboss.ws>
+    <version.quarkus>2.10.0.Final</version.quarkus>
+    <version.org.codehaus.mojo.jboss-maven-plugin>1.5.0</version.org.codehaus.mojo.jboss-maven-plugin>
+    <version.org.jboss.spec.javax.servlet>1.0.2.Final</version.org.jboss.spec.javax.servlet>
+    <version.junit>4.13.1</version.junit>
+    <version.mysql>8.0.25</version.mysql>
+    <version.org.jboss.logging.jboss-logging>3.2.1.Final</version.org.jboss.logging.jboss-logging>
+    <maven.compiler.source>11</maven.compiler.source>
+    <version.com.ibm>11.5.0.0</version.com.ibm>
+    <version.doxia>1.8.1</version.doxia>
+    <version.maven-failsafe-plugin>2.22.0</version.maven-failsafe-plugin>
+    <testLogToFile>true</testLogToFile>
+    <version.org.jboss.resteasy>4.7.4.Final</version.org.jboss.resteasy>
+    <version.org.mockito>3.8.0</version.org.mockito>
+    <version.org.apache.httpcomponents>4.2.1</version.org.apache.httpcomponents>
     <checkstyle.skip>true</checkstyle.skip>
+    <version.ant-contrib>1.0b3</version.ant-contrib>
+    <jvm.args.modular></jvm.args.modular>
+    <jvm.args.other>-server</jvm.args.other>
+    <version.io.mashona>1.0.0.Beta1</version.io.mashona>
+    <version.jfree>1.0.9</version.jfree>
+    <version.org.jboss.integration>6.0.0.CR1</version.org.jboss.integration>
+    <version.sun.jdk>jdk</version.sun.jdk>
+    <version.com.sun.jersey>1.9.1</version.com.sun.jersey>
+    <version.org.hibernate.javax.persistence>1.0.1.Final</version.org.hibernate.javax.persistence>
+    <version.maven.checkstyle-plugin>3.1.2</version.maven.checkstyle-plugin>
+    <version.com.github.spotbugs.spotbugs-maven-plugin>4.5.3.0</version.com.github.spotbugs.spotbugs-maven-plugin>
+    <version.fasterxml.jackson>2.13.1</version.fasterxml.jackson>
+    <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+    <version.org.jboss.spec.javax.transaction>1.1.0.Final</version.org.jboss.spec.javax.transaction>
+    <version.dom4j>1.6.1</version.dom4j>
+    <version.org.jboss.spec.javax.interceptor>2.0.0.Final</version.org.jboss.spec.javax.interceptor>
+    <version.javax.annotation>1.2</version.javax.annotation>
+    <version.org.sonatype.plugins.nexus-staging-maven-plugin>1.6.6</version.org.sonatype.plugins.nexus-staging-maven-plugin>
+    <version.com.microsoft.sqlserver>mssql2005_sqljdbc_2.0</version.com.microsoft.sqlserver>
+    <server.jvm.args>${jvm.args.other} ${jvm.args.byteman} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
+    <version.com.oracle>18.3.0.0</version.com.oracle>
+    <version.compiler.plugin>3.8.0-jboss-2</version.compiler.plugin>
+    <version.org.jboss.ironjacamar>1.1.1.Final</version.org.jboss.ironjacamar>
+    <version.com.sun.grizzly>1.9.59</version.com.sun.grizzly>
+    <version.jaxws-ri>2.3.5</version.jaxws-ri>
+    <version.hamcrest>2.2</version.hamcrest>
+    <maven.build.timestamp.format>yyyy/MMM/dd HH:mm</maven.build.timestamp.format>
+    <version.maven.jandex-plugin>1.0.6</version.maven.jandex-plugin>
+    <version.org.jboss.jandex>2.1.1.Final</version.org.jboss.jandex>
+    <version.postgresql>42.3.1</version.postgresql>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.com.sybase.jConnect>6.0</version.com.sybase.jConnect>
+    <version.org.jboss.spec.javax.ejb>1.0.2.Final</version.org.jboss.spec.javax.ejb>
+    <version.glassfish.json>1.1.4</version.glassfish.json>
+    <version.org.jboss.jboss-transaction-spi-jakarta>7.6.1.Final</version.org.jboss.jboss-transaction-spi-jakarta>
+    <version.org.wildfly.arquillian>3.0.1.Final</version.org.wildfly.arquillian>
+    <version.asm>3.3.1</version.asm>
+    <version.org.apache.ant>1.10.12</version.org.apache.ant>
+    <version.jnpserver>5.0.3.GA</version.jnpserver>
+    <version.commons-httpclient>3.1-jbossorg-1</version.commons-httpclient>
+    <version.javadoc.plugin>3.0.1</version.javadoc.plugin>
+    <version.org.eclipse.microprofile.openapi>1.1.2</version.org.eclipse.microprofile.openapi>
+    <version.org.jboss.spec.javax.jms.jboss-jms-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.jms.jboss-jms-api_1.1_spec>
+    <version.org.jboss.logging.jboss-logging-processor>2.0.0.Final</version.org.jboss.logging.jboss-logging-processor>
+    <jvm.args.jacoco>-javaagent:${project.build.directory}/lib/jacocoagent.jar=destfile=${project.build.directory}/coverage-reports/jacoco-ut.exec,includes=*,append=true,output=file</jvm.args.jacoco>
+    <version.org.jboss.weld>2.4.8.Final</version.org.jboss.weld>
+    <maven.compiler.target>11</maven.compiler.target>
+    <version.junit.jupiter>5.7.1</version.junit.jupiter>
+    <version.org.jboss.byteman>4.0.18</version.org.jboss.byteman>
+    <version.com.h2database>1.4.195</version.com.h2database>
+    <version.smallrye-converter-api>1.0.10</version.smallrye-converter-api>
     <jvm.args.byteman>-Dorg.jboss.byteman.verbose
                         -Djboss.modules.system.pkgs=org.jboss.byteman
                         -Dorg.jboss.byteman.transform.all
                         -javaagent:${project.build.directory}/lib/byteman.jar=listener:true</jvm.args.byteman>
-    <jvm.args.debug></jvm.args.debug>
-    <!-- IP stack configs. -->
-    <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
-    <jvm.args.jacoco>-javaagent:${project.build.directory}/lib/jacocoagent.jar=destfile=${project.build.directory}/coverage-reports/jacoco-ut.exec,includes=*,append=true,output=file</jvm.args.jacoco>
-    <!-- the need for -XX:MaxPermSize= was dropped as of Java SE 8 -->
-    <!-- -XX:ParallelGCThreads=2 is no not available in Java SE 9 -->
-    <jvm.args.memory>-Xms64m -Xmx1024m</jvm.args.memory>
-    <jvm.args.modular></jvm.args.modular>
-    <jvm.args.other>-server</jvm.args.other>
-    <maven.build.timestamp.format>yyyy/MMM/dd HH:mm</maven.build.timestamp.format>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <server.jvm.args>${jvm.args.other} ${jvm.args.byteman} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
-    <!-- Sortpom is enabled by default, but it could be disabled in sub-modules setting sortpom.skip = true -->
-    <sortpom.skip>false</sortpom.skip>
-    <!-- The surefire/failsafe test execution logs goes to a file by default -->
-    <testLogToFile>true</testLogToFile>
-    <version.ant-contrib>1.0b3</version.ant-contrib>
-    <version.asm>3.3.1</version.asm>
-    <version.com.github.spotbugs.spotbugs-maven-plugin>4.5.3.0</version.com.github.spotbugs.spotbugs-maven-plugin>
-    <version.com.h2database>1.4.195</version.com.h2database>
-    <version.com.ibm>11.5.0.0</version.com.ibm>
-    <version.com.microsoft.sqlserver>mssql2005_sqljdbc_2.0</version.com.microsoft.sqlserver>
-    <version.com.oracle>18.3.0.0</version.com.oracle>
-    <version.com.sun.grizzly>1.9.59</version.com.sun.grizzly>
-    <version.com.sun.jersey>1.9.1</version.com.sun.jersey>
-    <version.com.sybase.jConnect>6.0</version.com.sybase.jConnect>
-    <version.commons-httpclient>3.1-jbossorg-1</version.commons-httpclient>
-    <version.compiler.plugin>3.8.0-jboss-2</version.compiler.plugin>
-    <version.dom4j>1.6.1</version.dom4j>
-    <version.doxia>1.8.1</version.doxia>
-    <version.fasterxml.jackson>2.13.1</version.fasterxml.jackson>
-    <version.glassfish.json>1.1.4</version.glassfish.json>
-    <version.hamcrest>2.2</version.hamcrest>
-    <version.io.mashona>1.0.0.Beta1</version.io.mashona>
-    <version.io.narayana.checkstyle-config>1.0.1.Final</version.io.narayana.checkstyle-config>
-    <version.jakarta.json-api>2.0.1</version.jakarta.json-api>
-    <version.javadoc.plugin>3.0.1</version.javadoc.plugin>
-    <version.javax.annotation>1.2</version.javax.annotation>
-    <version.javax.enterprise>2.0</version.javax.enterprise>
-    <version.javax.inject>1</version.javax.inject>
-    <version.javax.javaee-api>8.0.1</version.javax.javaee-api>
-    <version.javax.ws.rs-api>2.0.1.Final</version.javax.ws.rs-api>
-    <version.jaxb>2.3.0</version.jaxb>
-    <version.jaxws-ri>2.3.5</version.jaxws-ri>
-    <version.jfree>1.0.9</version.jfree>
-    <version.jnpserver>5.0.3.GA</version.jnpserver>
-    <version.junit>4.13.1</version.junit>
-    <version.junit.jupiter>5.7.1</version.junit.jupiter>
-    <version.mariadb>1.2.2</version.mariadb>
-    <version.maven-failsafe-plugin>2.22.0</version.maven-failsafe-plugin>
-    <version.maven.checkstyle-plugin>3.1.2</version.maven.checkstyle-plugin>
-    <version.maven.jandex-plugin>1.0.6</version.maven.jandex-plugin>
-    <version.mysql>8.0.25</version.mysql>
-    <version.org.apache.activemq>2.19.0</version.org.apache.activemq>
-    <version.org.apache.ant>1.10.12</version.org.apache.ant>
-    <version.org.apache.httpcomponents>4.2.1</version.org.apache.httpcomponents>
-    <version.org.codehaus.mojo.jboss-maven-plugin>1.5.0</version.org.codehaus.mojo.jboss-maven-plugin>
-    <version.org.eclipse.microprofile.openapi>1.1.2</version.org.eclipse.microprofile.openapi>
-    <version.org.eclipse.transformer>0.2.0</version.org.eclipse.transformer>
-    <version.org.hibernate.javax.persistence>1.0.1.Final</version.org.hibernate.javax.persistence>
-    <version.org.jacoco>0.8.8</version.org.jacoco>
-    <version.org.jboss.arquillian.container.weld>3.0.2.Final</version.org.jboss.arquillian.container.weld>
-    <version.org.jboss.arquillian.core>1.6.0.Final</version.org.jboss.arquillian.core>
-    <version.org.jboss.as.plugins.jboss-as-maven-plugin>7.4.Final</version.org.jboss.as.plugins.jboss-as-maven-plugin>
-    <version.org.jboss.byteman>4.0.18</version.org.jboss.byteman>
-    <version.org.jboss.integration>6.0.0.CR1</version.org.jboss.integration>
-    <version.org.jboss.ironjacamar>1.1.1.Final</version.org.jboss.ironjacamar>
-    <version.org.jboss.jandex>2.1.1.Final</version.org.jboss.jandex>
-    <version.org.jboss.jboss-transaction-spi>7.6.1.Final</version.org.jboss.jboss-transaction-spi>
-    <version.org.jboss.jboss-transaction-spi-jakarta>7.6.1.Final</version.org.jboss.jboss-transaction-spi-jakarta>
-    <version.org.jboss.logging.jboss-logging>3.2.1.Final</version.org.jboss.logging.jboss-logging>
-    <version.org.jboss.logging.jboss-logging-processor>2.0.0.Final</version.org.jboss.logging.jboss-logging-processor>
-    <version.org.jboss.logmanager>1.5.1.Final</version.org.jboss.logmanager>
-    <version.org.jboss.openjdk-orb>8.1.9.Final</version.org.jboss.openjdk-orb>
-    <version.org.jboss.resteasy>4.7.4.Final</version.org.jboss.resteasy>
-    <version.org.jboss.spec.javax.ejb>1.0.2.Final</version.org.jboss.spec.javax.ejb>
-    <version.org.jboss.spec.javax.interceptor>2.0.0.Final</version.org.jboss.spec.javax.interceptor>
-    <version.org.jboss.spec.javax.jms.jboss-jms-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.jms.jboss-jms-api_1.1_spec>
     <version.org.jboss.spec.javax.jms.jboss-jms-api_2.0_spec>1.0.0.Final</version.org.jboss.spec.javax.jms.jboss-jms-api_2.0_spec>
-    <version.org.jboss.spec.javax.servlet>1.0.2.Final</version.org.jboss.spec.javax.servlet>
-    <version.org.jboss.spec.javax.transaction>1.1.0.Final</version.org.jboss.spec.javax.transaction>
-    <version.org.jboss.spec.javax.xml.bind.jboss-jaxb-api_2.3_spec>2.0.1.Final</version.org.jboss.spec.javax.xml.bind.jboss-jaxb-api_2.3_spec>
-    <version.org.jboss.spec.javax.xml.ws.jboss-jaxws-api_2.3_spec>2.0.0.Final</version.org.jboss.spec.javax.xml.ws.jboss-jaxws-api_2.3_spec>
-    <version.org.jboss.weld>2.4.8.Final</version.org.jboss.weld>
-    <version.org.jboss.ws>1.1.2.Final</version.org.jboss.ws>
-    <version.org.mockito>3.8.0</version.org.mockito>
-    <version.org.slf4j>1.7.30</version.org.slf4j>
-    <version.org.sonatype.plugins.nexus-staging-maven-plugin>1.6.6</version.org.sonatype.plugins.nexus-staging-maven-plugin>
-    <version.org.wildfly.arquillian>3.0.1.Final</version.org.wildfly.arquillian>
-    <version.postgresql>42.3.1</version.postgresql>
-    <version.quarkus>2.10.0.Final</version.quarkus>
-    <version.smallrye-converter-api>1.0.10</version.smallrye-converter-api>
     <version.sortpom>3.0.0</version.sortpom>
-    <version.sun.jdk>jdk</version.sun.jdk>
+    <version.org.jboss.openjdk-orb>8.1.9.Final</version.org.jboss.openjdk-orb>
+    <version.org.apache.activemq>2.19.0</version.org.apache.activemq>
+    <version.org.jboss.spec.javax.xml.ws.jboss-jaxws-api_2.3_spec>2.0.0.Final</version.org.jboss.spec.javax.xml.ws.jboss-jaxws-api_2.3_spec>
+    <sortpom.skip>false</sortpom.skip>
+    <version.javax.enterprise>2.0</version.javax.enterprise>
+    <version.javax.ws.rs-api>2.0.1.Final</version.javax.ws.rs-api>
+    <buildproperty.date>${maven.build.timestamp}</buildproperty.date>
+    <version.jakarta.json-api>2.0.1</version.jakarta.json-api>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>javax.annotation</groupId>
@@ -306,7 +285,6 @@
       <url>https://repository.jboss.org/nexus/content/groups/public/</url>
     </pluginRepository>
   </pluginRepositories>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -316,7 +294,6 @@
           <version>${version.org.jboss.byteman}</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
           <configuration>
             <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
@@ -333,7 +310,6 @@
           <version>${version.org.jboss.as.plugins.jboss-as-maven-plugin}</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.2.0</version>
           <configuration>
@@ -348,30 +324,13 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${version.compiler.plugin}</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
         </plugin>
         <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>${version.org.sonatype.plugins.nexus-staging-maven-plugin}</version>
-          <extensions>true</extensions>
-          <configuration>
-            <serverId>jboss-releases-repository</serverId>
-            <nexusUrl>https://repository.jboss.org/nexus/</nexusUrl>
-            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
             <argLine>${surefireArgLine}</argLine>
@@ -386,11 +345,9 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
@@ -470,15 +427,8 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
     <plugins>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <executions>
           <execution>
@@ -490,9 +440,24 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${version.maven.checkstyle-plugin}</version>
+        <executions>
+          <execution>
+            <id>check-style</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>checkstyle</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>io.narayana</groupId>
+            <artifactId>narayana-checkstyle-config</artifactId>
+            <version>${version.io.narayana.checkstyle-config}</version>
+          </dependency>
+        </dependencies>
         <configuration>
           <configLocation>narayana-checkstyle/checkstyle.xml</configLocation>
           <suppressionsLocation>narayana-checkstyle/suppressions.xml</suppressionsLocation>
@@ -501,46 +466,28 @@
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <excludes>**/*$logger.java,**/*$bundle.java</excludes>
           <useFile></useFile>
-          <!-- checkstyle is set to be run on particular modules by disabling skip -->
           <skip>${checkstyle.skip}</skip>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>io.narayana</groupId>
-            <artifactId>narayana-checkstyle-config</artifactId>
-            <version>${version.io.narayana.checkstyle-config}</version>
-          </dependency>
-        </dependencies>
-        <executions>
-          <execution>
-            <id>check-style</id>
-            <goals>
-              <goal>checkstyle</goal>
-            </goals>
-            <phase>compile</phase>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
         <artifactId>sortpom-maven-plugin</artifactId>
         <version>${version.sortpom}</version>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>sort</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <skip>${sortpom.skip}</skip>
           <createBackupFile>false</createBackupFile>
           <sortProperties>true</sortProperties>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>sort</goal>
-            </goals>
-            <phase>verify</phase>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration combine.self="append">
           <forkMode>pertest</forkMode>
@@ -550,7 +497,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
           <execution>
@@ -587,10 +533,10 @@
             <executions>
               <execution>
                 <id>rulecheck</id>
+                <phase>test-compile</phase>
                 <goals>
                   <goal>rulecheck</goal>
                 </goals>
-                <phase>test-compile</phase>
                 <configuration>
                   <includes>
                     <include>**/*.btm</include>
@@ -608,7 +554,6 @@
         <pluginManagement>
           <plugins>
             <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-install-plugin</artifactId>
               <executions>
                 <execution>
@@ -621,29 +566,20 @@
         </pluginManagement>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
         </plugins>
       </build>
     </profile>
     <profile>
       <id>codeCoverage</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.jacoco</groupId>
-          <artifactId>org.jacoco.agent</artifactId>
-          <version>${version.org.jacoco}</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -651,48 +587,33 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>${version.org.jacoco}</version>
             <executions>
-              <!--
-                     Prepares the property pointing to the JaCoCo runtime agent which
-                     is passed as VM argument when Maven the Surefire plugin is executed.
-                 -->
               <execution>
                 <id>pre-unit-test</id>
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
                 <configuration>
-                  <!-- Sets the path to the file which contains the execution data. -->
                   <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-                  <!--
-                             Sets the name of the property containing the settings
-                             for JaCoCo runtime agent.
-                         -->
                   <propertyName>surefireArgLine</propertyName>
                 </configuration>
               </execution>
-              <!--
-                     Ensures that the code coverage report for unit tests is created after
-                     unit tests have been run.
-                 -->
               <execution>
                 <id>post-unit-test</id>
+                <phase>test</phase>
                 <goals>
                   <goal>report</goal>
                 </goals>
-                <phase>test</phase>
                 <configuration>
-                  <!-- Sets the path to the file which contains the execution data. -->
                   <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-                  <!-- Sets the output directory for the code coverage report. -->
                   <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
                 </configuration>
               </execution>
               <execution>
                 <id>check</id>
+                <phase>test</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
-                <phase>test</phase>
                 <configuration>
                   <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
                   <rules>
@@ -707,37 +628,14 @@
                           <value>COVEREDRATIO</value>
                           <minimum>0.0</minimum>
                         </limit>
-                        <!--
-                                  <limit>
-                                    <counter>CLASS</counter>
-                                    <value>MISSEDCOUNT</value>
-                                    <maximum>0</maximum>
-                                  </limit>
-								  -->
                       </limits>
                     </rule>
-                    <!--
-                              <rule>
-                                <element>CLASS</element>
-                                <excludes>
-                                  <exclude>*Test</exclude>
-                                </excludes>
-                                <limits>
-                                  <limit>
-                                    <counter>LINE</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimum>0.20</minimum>
-                                  </limit>
-                                </limits>
-                              </rule>
-							  -->
                   </rules>
                 </configuration>
               </execution>
             </executions>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <argLine>${surefireArgLine} ${jvm.args.modular} -Djdk.attach.allowAttachSelf=true -Xss2048k</argLine>
@@ -750,15 +648,14 @@
             </configuration>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
               <execution>
                 <id>unpack-jacoco-agent</id>
+                <phase>test-compile</phase>
                 <goals>
                   <goal>unpack-dependencies</goal>
                 </goals>
-                <phase>test-compile</phase>
                 <configuration>
                   <stripVersion>true</stripVersion>
                   <includeGroupIds>org.jacoco</includeGroupIds>
@@ -769,6 +666,14 @@
           </plugin>
         </plugins>
       </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.jacoco</groupId>
+          <artifactId>org.jacoco.agent</artifactId>
+          <version>${version.org.jacoco}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
     </profile>
     <profile>
       <id>debug</id>
@@ -787,8 +692,8 @@
         <module>narayana-full</module>
       </modules>
       <properties>
-        <version.orson>0.5.0</version.orson>
         <version.tanukisoft>3.2.3</version.tanukisoft>
+        <version.orson>0.5.0</version.orson>
       </properties>
     </profile>
     <profile>
@@ -802,10 +707,10 @@
             <executions>
               <execution>
                 <id>spotbugs</id>
+                <phase>compile</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
-                <phase>compile</phase>
                 <configuration>
                   <failOnError>false</failOnError>
                 </configuration>
@@ -813,17 +718,7 @@
             </executions>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
-            <configuration>
-              <reportPlugins>
-                <plugin>
-                  <groupId>com.github.spotbugs</groupId>
-                  <artifactId>spotbugs-maven-plugin</artifactId>
-                  <version>${version.com.github.spotbugs.spotbugs-maven-plugin}</version>
-                </plugin>
-              </reportPlugins>
-            </configuration>
             <dependencies>
               <dependency>
                 <groupId>org.apache.maven.doxia</groupId>
@@ -851,6 +746,15 @@
                 <version>${version.doxia}</version>
               </dependency>
             </dependencies>
+            <configuration>
+              <reportPlugins>
+                <plugin>
+                  <groupId>com.github.spotbugs</groupId>
+                  <artifactId>spotbugs-maven-plugin</artifactId>
+                  <version>${version.com.github.spotbugs.spotbugs-maven-plugin}</version>
+                </plugin>
+              </reportPlugins>
+            </configuration>
           </plugin>
         </plugins>
       </build>
