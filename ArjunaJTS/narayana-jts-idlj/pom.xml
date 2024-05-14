@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.jts</groupId>
     <artifactId>narayana-jts-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>narayana-jts-idlj</artifactId>
-  <packaging>jar</packaging>
   <name>Narayana: ArjunaJTS narayana-jts-idlj</name>
   <description>JTS uber jar with idlj stubs</description>
   <dependencies>
@@ -85,13 +79,6 @@
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>jtax</artifactId>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>tanukisoft</groupId>
-      <artifactId>wrapper</artifactId>
-      <version>${version.tanukisoft}</version>
-    </dependency>
--->
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
@@ -110,14 +97,13 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
+            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
-            <phase>package</phase>
             <configuration>
               <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
               <artifactSet>
@@ -140,12 +126,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <archive>
@@ -167,10 +147,10 @@
         <executions>
           <execution>
             <id>add-source</id>
+            <phase>generate-sources</phase>
             <goals>
               <goal>add-source</goal>
             </goals>
-            <phase>generate-sources</phase>
             <configuration>
               <sources>
                 <source>../../common/classes</source>
@@ -183,7 +163,6 @@
                 <source>../orbportability/classes</source>
                 <source>../jts/classes</source>
                 <source>../jtax/classes</source>
-                <!-- when adding any record here consider adding it for community profile as well -->
               </sources>
             </configuration>
           </execution>
@@ -200,20 +179,20 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <doCheck>false</doCheck>
           <doUpdate>false</doUpdate>
           <shortRevisionLength>5</shortRevisionLength>
           <revisionOnScmFailure>${project.version}-noscm</revisionOnScmFailure>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>create</goal>
-            </goals>
-            <phase>validate</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -223,24 +202,17 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <configuration>
-              <detectOfflineLinks>false</detectOfflineLinks>
-              <excludePackageNames>*.internal.*</excludePackageNames>
-              <failOnError>false</failOnError>
-            </configuration>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -249,6 +221,10 @@
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <detectOfflineLinks>false</detectOfflineLinks>
+              <excludePackageNames>*.internal.*</excludePackageNames>
+            </configuration>
           </plugin>
         </plugins>
       </build>
@@ -258,14 +234,13 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
             <executions>
               <execution>
+                <phase>package</phase>
                 <goals>
                   <goal>shade</goal>
                 </goals>
-                <phase>package</phase>
                 <configuration>
                   <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
                 </configuration>
@@ -277,26 +252,6 @@
     </profile>
     <profile>
       <id>community</id>
-      <dependencies>
-        <dependency>
-          <groupId>orson</groupId>
-          <artifactId>orson</artifactId>
-          <version>${version.orson}</version>
-          <scope>system</scope>
-          <systemPath>${orson.jar.location}/orson-0.5.0.jar</systemPath>
-        </dependency>
-        <dependency>
-          <groupId>org.jfree</groupId>
-          <artifactId>jfreechart</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>tanukisoft</groupId>
-          <artifactId>wrapper</artifactId>
-          <version>${version.tanukisoft}</version>
-          <scope>provided</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -305,10 +260,10 @@
             <executions>
               <execution>
                 <id>add-source</id>
+                <phase>generate-sources</phase>
                 <goals>
                   <goal>add-source</goal>
                 </goals>
-                <phase>generate-sources</phase>
                 <configuration>
                   <sources>
                     <source>../../common/classes</source>
@@ -329,15 +284,9 @@
           </plugin>
           <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
-            <configuration combine.self="override">
-              <includes>
-                <include>com/arjuna/ats/jts/services/**/*.java</include>
-              </includes>
-            </configuration>
             <executions>
               <execution>
                 <id>comp</id>
-                <goals></goals>
                 <phase>compile</phase>
                 <configuration>
                   <excludes>
@@ -346,9 +295,34 @@
                 </configuration>
               </execution>
             </executions>
+            <configuration combine.self="override">
+              <includes>
+                <include>com/arjuna/ats/jts/services/**/*.java</include>
+              </includes>
+            </configuration>
           </plugin>
         </plugins>
       </build>
+      <dependencies>
+        <dependency>
+          <groupId>orson</groupId>
+          <artifactId>orson</artifactId>
+          <version>${version.orson}</version>
+          <scope>system</scope>
+          <systemPath>${orson.jar.location}/orson-0.5.0.jar</systemPath>
+        </dependency>
+        <dependency>
+          <groupId>org.jfree</groupId>
+          <artifactId>jfreechart</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>tanukisoft</groupId>
+          <artifactId>wrapper</artifactId>
+          <version>${version.tanukisoft}</version>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
     </profile>
   </profiles>
 </project>

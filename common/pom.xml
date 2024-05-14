@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana</groupId>
     <artifactId>narayana-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>common</artifactId>
   <name>Narayana: common</name>
   <description>Narayana: common</description>
-  <packaging>jar</packaging>
+  <properties>
+    <propertiesFileName>jbossts-properties.xml</propertiesFileName>
+    <sortpom.skip>true</sortpom.skip>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -34,79 +32,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <properties>
-    <sortpom.skip>true</sortpom.skip>
-    <propertiesFileName>jbossts-properties.xml</propertiesFileName>
-  </properties>
-  <build>
-    <sourceDirectory>classes</sourceDirectory>
-    <testSourceDirectory>tests</testSourceDirectory>
-    <resources>
-      <resource>
-        <directory>${project.basedir}/src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <inherited>false</inherited>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <arjuna-properties-file>jbossts-properties.xml</arjuna-properties-file>
-            </manifestEntries>
-          </archive>
-        </configuration>
-        <executions>
-          <execution>
-            <id>create-test-jar</id>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>attach-test-sources</id>
-            <goals>
-              <goal>test-jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/DummyProperties.java</exclude>
-            <exclude>**/DummyEnvironmentBean.java</exclude>
-          </excludes>
-          <systemPropertyVariables>
-            <test_build_version>${buildNumber}</test_build_version>
-            <test_build_prop_file>${propertiesFileName}</test_build_prop_file>
-            <test_build_id>JBoss Inc. [${user.name}] ${os.name} ${os.version} ${buildproperty.date}</test_build_id>
-          </systemPropertyVariables>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
   <dependencies>
     <dependency>
       <groupId>org.jboss.logging</groupId>
@@ -124,33 +49,90 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
-    <!-- START TEST -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- END TEST -->
   </dependencies>
-
-    <profiles>
-      <profile>
-          <id>release</id>
-          <build>
-              <plugins>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-install-plugin</artifactId>
-                  <executions>
-                    <execution>
-                      <id>default-install</id>
-                      <phase>install</phase>
-                    </execution>
-                  </executions>
-                  <inherited>false</inherited>
-                </plugin>
-              </plugins>
-          </build>
-      </profile>
-    </profiles>
+  <build>
+    <sourceDirectory>classes</sourceDirectory>
+    <testSourceDirectory>tests</testSourceDirectory>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-test-jar</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <arjuna-properties-file>jbossts-properties.xml</arjuna-properties-file>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>attach-test-sources</id>
+            <goals>
+              <goal>test-jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/DummyProperties.java</exclude>
+            <exclude>**/DummyEnvironmentBean.java</exclude>
+          </excludes>
+          <systemPropertyVariables>
+            <test_build_version>${buildNumber}</test_build_version>
+            <test_build_prop_file>${propertiesFileName}</test_build_prop_file>
+            <test_build_id>JBoss Inc. [${user.name}] ${os.name} ${os.version} ${buildproperty.date}</test_build_id>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-install-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-install</id>
+                <phase>install</phase>
+              </execution>
+            </executions>
+            <inherited>false</inherited>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

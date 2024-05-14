@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-
   <parent>
     <groupId>org.jboss.narayana</groupId>
     <artifactId>narayana-all</artifactId>
@@ -16,60 +12,51 @@
   <packaging>pom</packaging>
   <name>Narayana Bom Test</name>
   <description>Narayana BOM is for centralising dependency management for development purposes (test scoped dependencies)</description>
-
-  <!--
-    This Bill of Materials (BOM) is for centralising dependency management across the various modules of Narayana.
-    The BOM is intended for development purposes within Narayana.
-  -->
   <properties>
-    <version.ant-contrib>1.0b3</version.ant-contrib>
-    <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
-    <version.arquillian.weld-embedded>3.0.2.Final</version.arquillian.weld-embedded>
-    <version.com.h2database>2.2.224</version.com.h2database>
-    <version.com.ibm>db2jcc4</version.com.ibm>
+    <version.org.wildfly.extras.creaper>2.0.2</version.org.wildfly.extras.creaper>
+    <version.org.wildfly.core>20.0.0.Final</version.org.wildfly.core>
+    <version.org.slf4j>1.7.30</version.org.slf4j>
     <version.com.oracle>19.21.0.0</version.com.oracle>
-    <version.com.sun.messaging.mq.fscontext>4.6-b01</version.com.sun.messaging.mq.fscontext>
-    <version.commons-httpclient>3.1-jbossorg-1</version.commons-httpclient>
-    <version.hamcrest>2.2</version.hamcrest>
-    <version.httpcomponents>4.5.14</version.httpcomponents>
-    <version.io.mashona>1.0.0.Beta1</version.io.mashona>
-    <version.jakarta.ejb.jakarta-ejb-api>4.0.1</version.jakarta.ejb.jakarta-ejb-api>
-    <version.jakartaee-api>10.0.0</version.jakartaee-api>
     <version.jboss.profiler.jvmti>1.0.0.CR5</version.jboss.profiler.jvmti>
-    <version.junit>4.13.1</version.junit>
-    <version.junit.jupiter>5.9.2</version.junit.jupiter>
-    <version.log4j-core>2.19.0</version.log4j-core>
+    <version.com.sun.messaging.mq.fscontext>4.6-b01</version.com.sun.messaging.mq.fscontext>
+    <version.jakartaee-api>10.0.0</version.jakartaee-api>
     <version.mariadb>1.2.2</version.mariadb>
+    <version.org.jboss.arquillian.container.weld>3.0.2.Final</version.org.jboss.arquillian.container.weld>
+    <version.hamcrest>2.2</version.hamcrest>
+    <version.jakarta.ejb.jakarta-ejb-api>4.0.1</version.jakarta.ejb.jakarta-ejb-api>
+    <version.postgresql>42.6.0</version.postgresql>
+    <version.org.jboss.arquillian.core>1.7.0.Final</version.org.jboss.arquillian.core>
+    <version.quarkus>3.2.6.Final</version.quarkus>
+    <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
+    <version.org.wildfly.arquillian>5.0.0.Final</version.org.wildfly.arquillian>
+    <version.org.jboss.shrinkwrap>1.2.6</version.org.jboss.shrinkwrap>
+    <version.squareup.okhttp>1.5.4</version.squareup.okhttp>
+    <version.log4j-core>2.19.0</version.log4j-core>
+    <version.junit>4.13.1</version.junit>
     <version.mysql>8.0.33</version.mysql>
     <version.org.apache.ant>1.10.12</version.org.apache.ant>
-    <version.org.jboss.arquillian.container.weld>3.0.2.Final</version.org.jboss.arquillian.container.weld>
-    <version.org.jboss.arquillian.core>1.7.0.Final</version.org.jboss.arquillian.core>
-    <version.org.jboss.byteman>4.0.19</version.org.jboss.byteman>
-    <version.org.jboss.shrinkwrap>1.2.6</version.org.jboss.shrinkwrap>
+    <version.com.ibm>db2jcc4</version.com.ibm>
     <version.org.jboss.shrinkwrap.resolvers>3.1.4</version.org.jboss.shrinkwrap.resolvers>
-    <version.org.jboss.weld>5.0.1.Final</version.org.jboss.weld>
+    <version.commons-httpclient>3.1-jbossorg-1</version.commons-httpclient>
     <version.org.mockito>3.8.0</version.org.mockito>
-    <version.org.slf4j>1.7.30</version.org.slf4j>
+    <version.arquillian.weld-embedded>3.0.2.Final</version.arquillian.weld-embedded>
+    <version.org.jboss.weld>5.0.1.Final</version.org.jboss.weld>
+    <version.junit.jupiter>5.9.2</version.junit.jupiter>
+    <version.org.jboss.byteman>4.0.19</version.org.jboss.byteman>
+    <version.com.h2database>2.2.224</version.com.h2database>
+    <version.ant-contrib>1.0b3</version.ant-contrib>
     <version.org.springframework>3.2.2.RELEASE</version.org.springframework>
-    <version.org.wildfly.arquillian>5.0.0.Final</version.org.wildfly.arquillian>
-    <version.org.wildfly.core>20.0.0.Final</version.org.wildfly.core>
-    <version.org.wildfly.extras.creaper>2.0.2</version.org.wildfly.extras.creaper>
-    <version.postgresql>42.6.0</version.postgresql>
-    <version.quarkus>3.2.6.Final</version.quarkus>
-    <version.squareup.okhttp>1.5.4</version.squareup.okhttp>
+    <version.io.mashona>1.0.0.Beta1</version.io.mashona>
+    <version.httpcomponents>4.5.14</version.httpcomponents>
   </properties>
-
   <dependencyManagement>
-    <!-- Arjuna Core -->
     <dependencies>
-
       <dependency>
         <groupId>io.mashona</groupId>
         <artifactId>mashona-logwriting</artifactId>
         <version>${version.io.mashona}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.jboss.byteman</groupId>
         <artifactId>byteman-bmunit</artifactId>
@@ -82,9 +69,6 @@
         <version>${version.com.h2database}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- Arjuna JTA -->
-
       <dependency>
         <groupId>org.jboss.arquillian.protocol</groupId>
         <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
@@ -97,8 +81,6 @@
         <version>${version.arquillian.byteman}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- Standalone JNDI server -->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-jdbc</artifactId>
@@ -111,23 +93,18 @@
         <version>${version.org.jboss.byteman}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>${version.org.mockito}</version>
         <scope>test</scope>
         <exclusions>
-          <!-- JUnit already comes with Hamcrest -->
           <exclusion>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
-
-      <!-- Arjuna JTS -->
-
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
@@ -146,48 +123,36 @@
         <version>${version.org.slf4j}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- Compensation -->
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-impl</artifactId>
         <version>${version.org.jboss.weld}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- Test dependencies -->
       <dependency>
         <groupId>org.jboss.narayana.xts</groupId>
         <artifactId>byteman_support</artifactId>
         <version>${project.version}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- Narayana full -->
-      <!-- This dependency should be removed in JBTM-3056 -->
       <dependency>
         <groupId>org.jboss.narayana.xts</groupId>
         <artifactId>xts-test-servlet</artifactId>
         <version>${project.version}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>commons-httpclient</groupId>
         <artifactId>commons-httpclient</artifactId>
         <version>${version.commons-httpclient}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- qa -->
-
       <dependency>
         <groupId>jboss.profiler.jvmti</groupId>
         <artifactId>jboss-profiler-jvmti</artifactId>
         <version>${version.jboss.profiler.jvmti}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-core</artifactId>
@@ -230,7 +195,6 @@
         <version>${version.ant-contrib}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>com.sun.messaging.mq</groupId>
         <artifactId>fscontext</artifactId>
@@ -243,18 +207,12 @@
         <version>${version.log4j-core}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- Narayana Dependencies -->
-
       <dependency>
         <groupId>org.jboss.narayana</groupId>
         <artifactId>test-utils</artifactId>
         <version>${project.version}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- JDBC Drivers -->
-
       <dependency>
         <groupId>com.oracle.database.jdbc</groupId>
         <artifactId>ojdbc10</artifactId>
@@ -279,8 +237,6 @@
         <version>${version.com.ibm}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- tx -->
       <dependency>
         <groupId>org.jboss.byteman</groupId>
         <artifactId>byteman-dtest</artifactId>
@@ -293,8 +249,6 @@
         <version>${version.httpcomponents}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- Arquillian Maven Resolver -->
       <dependency>
         <groupId>org.jboss.shrinkwrap.resolver</groupId>
         <artifactId>shrinkwrap-resolver-api</artifactId>
@@ -319,15 +273,12 @@
         <version>${version.org.jboss.shrinkwrap.resolvers}</version>
         <scope>test</scope>
       </dependency>
-      <!-- XTS: -->
-      <!-- test time dep only - XTS TestRunnerXMLServlet -->
       <dependency>
         <groupId>org.dom4j</groupId>
         <artifactId>dom4j</artifactId>
         <version>${version.org.dom4j}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.jboss.byteman</groupId>
         <artifactId>byteman</artifactId>
@@ -340,15 +291,12 @@
         <version>${version.org.jboss.byteman}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- RTS-TX -->
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${version.junit}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter</artifactId>
@@ -361,21 +309,17 @@
         <version>${version.junit.jupiter}</version>
         <scope>test</scope>
       </dependency>
-      <!--JUnit Jupiter Engine to depend on the JUnit4 engine and JUnit 4 API  -->
       <dependency>
         <groupId>org.junit.vintage</groupId>
         <artifactId>junit-vintage-engine</artifactId>
         <version>${version.junit.jupiter}</version>
       </dependency>
-
       <dependency>
         <groupId>com.squareup.okhttp</groupId>
         <artifactId>okhttp</artifactId>
         <version>${version.squareup.okhttp}</version>
         <scope>test</scope>
       </dependency>
-
-      <!-- undertow with RestEasy -->
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest</artifactId>
@@ -388,7 +332,6 @@
         <version>${project.version}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.jboss.weld.se</groupId>
         <artifactId>weld-se-shaded</artifactId>
@@ -449,26 +392,19 @@
           </exclusion>
         </exclusions>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
-        <inherited>false</inherited>
         <executions>
           <execution>
             <id>default-install</id>
             <phase>install</phase>
           </execution>
         </executions>
+        <inherited>false</inherited>
       </plugin>
     </plugins>
   </build>
