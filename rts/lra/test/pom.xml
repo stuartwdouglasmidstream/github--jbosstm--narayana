@@ -1,59 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright 2017 Red Hat, Inc. and/or its affiliates.
-  ~
-  ~ Licensed under the Apache License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
-  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.jboss.narayana.rts</groupId>
     <artifactId>lra-parent</artifactId>
     <version>5.13.0.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-
   <artifactId>lra-test</artifactId>
   <packaging>pom</packaging>
   <name>LRA tests</name>
   <description>LRA tests running LRA TCKs and Narayana LRA internal testsuite</description>
-
   <modules>
     <module>tck</module>
     <module>basic</module>
     <module>arquillian-extension</module>
   </modules>
-
   <properties>
-
-    <lra.coordinator.debug.params></lra.coordinator.debug.params>
-    <!-- defined within -Ddebug.coordinator/-Pdebug.lra.coordinator -->
-    <lra.coordinator.debug.port>8788</lra.coordinator.debug.port>
-    <lra.coordinator.exec.plugin.phase>none</lra.coordinator.exec.plugin.phase>
-    <!-- not starting coordinator by default, need -Parq -->
-
-    <!-- currently only defines where to search for the coordinator, it does not change where the coordinator is started -->
-    <lra.coordinator.host>localhost</lra.coordinator.host>
-    <!-- the lra.coordinator.jar.path needs to be redefined at each test sub-module -->
-    <lra.coordinator.jar.path>${project.basedir}/../coordinator-quarkus/target/lra-coordinator-runner.jar</lra.coordinator.jar.path>
-
-    <lra.coordinator.log.console.disable></lra.coordinator.log.console.disable>
-    <lra.coordinator.log.file.enable></lra.coordinator.log.file.enable>
-    <lra.coordinator.log.file.level></lra.coordinator.log.file.level>
-    <lra.coordinator.log.file.module.arjuna></lra.coordinator.log.file.module.arjuna>
     <lra.coordinator.log.file.module.narayana></lra.coordinator.log.file.module.narayana>
-    <lra.coordinator.log.file.path></lra.coordinator.log.file.path>
     <lra.coordinator.port>8080</lra.coordinator.port>
-    <!-- the property used by NarayanaLRAClient when passed into the container as the JVM parameter -->
-    <lra.coordinator.url>http://${lra.coordinator.host}:${lra.coordinator.port}/lra-coordinator</lra.coordinator.url>
-    <!-- for test executions where coordinator is started as a separate JVM (e.g. for Quarkus) and the test application
-             is deployed at the different JVM; these properties define where the test JVM application is started -->
+    <lra.coordinator.log.console.disable></lra.coordinator.log.console.disable>
     <test.application.host>localhost</test.application.host>
+    <lra.coordinator.debug.params></lra.coordinator.debug.params>
+    <lra.coordinator.log.file.path></lra.coordinator.log.file.path>
+    <lra.coordinator.log.file.level></lra.coordinator.log.file.level>
     <test.application.port>8180</test.application.port>
-
+    <lra.coordinator.debug.port>8788</lra.coordinator.debug.port>
+    <lra.coordinator.host>localhost</lra.coordinator.host>
+    <lra.coordinator.log.file.module.arjuna></lra.coordinator.log.file.module.arjuna>
+    <lra.coordinator.log.file.enable></lra.coordinator.log.file.enable>
+    <lra.coordinator.jar.path>${project.basedir}/../coordinator-quarkus/target/lra-coordinator-runner.jar</lra.coordinator.jar.path>
+    <lra.coordinator.url>http://${lra.coordinator.host}:${lra.coordinator.port}/lra-coordinator</lra.coordinator.url>
+    <lra.coordinator.exec.plugin.phase>none</lra.coordinator.exec.plugin.phase>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
@@ -73,73 +52,155 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
           <redirectTestOutputToFile>${test.logs.to.file}</redirectTestOutputToFile>
           <systemPropertyVariables combine="merge">
-            <!-- failsafe test startup logging configuration-->
             <java.util.logging.config.file>src/test/resources/logging.properties</java.util.logging.config.file>
-            <!-- host and port where to find the test application -->
             <test.application.host>${test.application.host}</test.application.host>
             <test.application.port>${test.application.port}</test.application.port>
             <lra.tck.suite.host>${test.application.host}</lra.tck.suite.host>
-            <!-- not necessary for test/basic but for TCK it's necessary -->
             <lra.tck.suite.port>${test.application.port}</lra.tck.suite.port>
             <lra.coordinator.url>${lra.coordinator.url}</lra.coordinator.url>
-            <!-- passing to Arquillian as configured at arquillian*.xml and used for app server start-up (e.g. sets up debug) -->
             <server.jvm.args>${server.jvm.args}</server.jvm.args>
-            <!-- used at AppServerCoordinatorDeploymentObserver -->
             <project.version>${project.version}</project.version>
-            <!-- used in arquillian*.xml descriptor to place test run related data -->
             <project.build.directory>${project.build.directory}</project.build.directory>
           </systemPropertyVariables>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>arq</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-env-variable-jboss-home</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireProperty>
+                      <property>env.JBOSS_HOME</property>
+                      <message>You need to define JBOSS_HOME environmental variable!</message>
+                      <regex>[^ ]*</regex>
+                      <regexMessage>You must set JBOSS_HOME environmental variable containing at least one non-space character.</regexMessage>
+                    </requireProperty>
+                  </rules>
+                  <fail>true</fail>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>${version.antrun.plugin}</version>
+            <executions>
+              <execution>
+                <phase>generate-test-resources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <zip basedir="../../" includes="ObjectStore" destfile="../../ObjectStore-${project.artifactId}.zip" whenempty="skip"></zip>
+                    <delete dir="../../ObjectStore" failonerror="false"></delete>
+                    <copy tofile="${env.JBOSS_HOME}/standalone/configuration/${lra.coordinator.xml.filename}" file="${env.JBOSS_HOME}/standalone/configuration/${config.to.replace}" overwrite="true"></copy>
+                    <copy tofile="${env.JBOSS_HOME}/standalone/configuration/${lra.participant.xml.filename}" file="${env.JBOSS_HOME}/standalone/configuration/${config.to.replace}" overwrite="true"></copy>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.wildfly.plugins</groupId>
+            <artifactId>wildfly-maven-plugin</artifactId>
+            <version>${version.wildfly-maven-plugin}</version>
+            <executions>
+              <execution>
+                <id>start</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                  <goal>deploy-artifact</goal>
+                </goals>
+                <configuration>
+                  <jbossHome>${env.JBOSS_HOME}</jbossHome>
+                  <serverConfig>${lra.coordinator.xml.filename}</serverConfig>
+                  <javaOpts>${server.jvm.args} ${server.jvm.object.store.arg}</javaOpts>
+                  <groupId>org.jboss.narayana.rts</groupId>
+                  <artifactId>lra-coordinator-war</artifactId>
+                  <name>${lra.coordinator.war.name}</name>
+                  <force>true</force>
+                </configuration>
+              </execution>
+              <execution>
+                <id>undeploy</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>undeploy</goal>
+                  <goal>shutdown</goal>
+                </goals>
+                <configuration>
+                  <name>lra-coordinator.war</name>
+                </configuration>
+              </execution>
+            </executions>
+            <configuration>
+              <skip>${skip.wildfly.plugin}</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <argLine>${server.jvm.args}</argLine>
+              <skipITs>false</skipITs>
+              <reportsDirectory>${project.build.directory}/failsafe-reports-arq</reportsDirectory>
+              <summaryFile>${project.build.directory}/failsafe-reports-arq/failsafe-summary.xml</summaryFile>
+              <systemProperties>
+                <arquillian.xml>arquillian-wildfly.xml</arquillian.xml>
+                <arquillian.group.qualifier>wildfly-cluster</arquillian.group.qualifier>
+                <arquillian.lra.coordinator.container.qualifier>${lra.coordinator.container.qualifier}</arquillian.lra.coordinator.container.qualifier>
+                <arquillian.lra.participant.container.qualifier>${lra.participant.container.qualifier}</arquillian.lra.participant.container.qualifier>
+                <arquillian.lra.coordinator.deployment.qualifier>${lra.coordinator.deployment.qualifier}</arquillian.lra.coordinator.deployment.qualifier>
+                <arquillian.lra.participant.deployment.qualifier>${lra.participant.deployment.qualifier}</arquillian.lra.participant.deployment.qualifier>
+                <lra.coordinator.xml.filename>${lra.coordinator.xml.filename}</lra.coordinator.xml.filename>
+                <lra.participant.xml.filename>${lra.participant.xml.filename}</lra.participant.xml.filename>
+                <version.resteasy-client>${version.resteasy-client}</version.resteasy-client>
+                <version.microprofile.lra>${version.microprofile.lra}</version.microprofile.lra>
+              </systemProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
       <modules>
         <module>crash</module>
       </modules>
       <properties>
-        <config.to.replace>standalone.xml</config.to.replace>
-        <!-- Qualifier of the container hosting lra-coordinator -->
-        <lra.coordinator.container.qualifier>lra-coordinator-server</lra.coordinator.container.qualifier>
-        <!-- Qualifier of the lra-coordinator of the deployment -->
-        <lra.coordinator.deployment.qualifier>lra-coordinator</lra.coordinator.deployment.qualifier>
-        <!-- The path where the Object Store of the coordinator should be saved -->
-        <lra.coordinator.object.store.path>${project.build.directory}/wfly_lra_objectstore</lra.coordinator.object.store.path>
-        <!-- the AppServerCoordinatorDeploymentObserver creates the deployment named 'lra-coordinator' and deploys it to the app server,
-             the last part of the path with value 'lra-coordinator' is defined by LRA coordinator JAX-RS endpoint -->
-        <lra.coordinator.url>http://${lra.coordinator.host}:${lra.coordinator.port}/lra-coordinator/lra-coordinator</lra.coordinator.url>
         <lra.coordinator.war.name>lra-coordinator.war</lra.coordinator.war.name>
-        <!-- The following filename is used for starting the WildFly instance that hosts the LRA coordinator; this file is a copy of the
-             standalone.xml file provided in WildFly (${env.JBOSS_HOME}/standalone/configuration/standalone.xml). Please, see the plugins
-             section of this profile (specifically, maven-antrun-plugin) for further info -->
-        <lra.coordinator.xml.filename>lra-coordinator.xml</lra.coordinator.xml.filename>
-        <!-- Qualifier of the container hosting lra-participant -->
-        <lra.participant.container.qualifier>lra-participant-server</lra.participant.container.qualifier>
-        <!-- Qualifier of the lra-participant of the deployment -->
-        <lra.participant.deployment.qualifier>lra-participant</lra.participant.deployment.qualifier>
-        <!-- The following filename is used for starting the WildFly instance that hosts the LRA participant; this file is a copy of the
-             standalone.xml file provided in WildFly (${env.JBOSS_HOME}/standalone/configuration/standalone.xml). Please, see the plugins
-             section of this profile (specifically, maven-antrun-plugin) for further info -->
         <lra.participant.xml.filename>lra-participant.xml</lra.participant.xml.filename>
-        <server.jvm.object.store.arg>-DObjectStoreEnvironmentBean.objectStoreDir=${lra.coordinator.object.store.path}</server.jvm.object.store.arg>
+        <config.to.replace>standalone.xml</config.to.replace>
+        <lra.coordinator.container.qualifier>lra-coordinator-server</lra.coordinator.container.qualifier>
         <skip.wildfly.plugin>true</skip.wildfly.plugin>
-        <!-- where the WFLY test application will be started at (the coordinator is war deployed for the same app server at the same port) -->
+        <lra.coordinator.object.store.path>${project.build.directory}/wfly_lra_objectstore</lra.coordinator.object.store.path>
+        <lra.participant.deployment.qualifier>lra-participant</lra.participant.deployment.qualifier>
+        <server.jvm.object.store.arg>-DObjectStoreEnvironmentBean.objectStoreDir=${lra.coordinator.object.store.path}</server.jvm.object.store.arg>
+        <lra.participant.container.qualifier>lra-participant-server</lra.participant.container.qualifier>
         <test.application.port>8080</test.application.port>
         <version.wildfly-maven-plugin>2.1.0.Beta1</version.wildfly-maven-plugin>
+        <lra.coordinator.deployment.qualifier>lra-coordinator</lra.coordinator.deployment.qualifier>
+        <lra.coordinator.xml.filename>lra-coordinator.xml</lra.coordinator.xml.filename>
+        <lra.coordinator.url>http://${lra.coordinator.host}:${lra.coordinator.port}/lra-coordinator/lra-coordinator</lra.coordinator.url>
       </properties>
-
       <dependencies>
         <dependency>
           <groupId>org.jboss.narayana.rts</groupId>
@@ -160,148 +221,7 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-
-      <build>
-        <plugins>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-enforcer-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>enforce-env-variable-jboss-home</id>
-                <goals>
-                  <goal>enforce</goal>
-                </goals>
-                <phase>initialize</phase>
-                <configuration>
-                  <rules>
-                    <requireProperty>
-                      <property>env.JBOSS_HOME</property>
-                      <message>You need to define JBOSS_HOME environmental variable!</message>
-                      <regex>[^ ]*</regex>
-                      <regexMessage>You must set JBOSS_HOME environmental variable containing at least one non-space character.</regexMessage>
-                    </requireProperty>
-                  </rules>
-                  <fail>true</fail>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- Makes sure that the two Wildfly instances use different standalone XML configurations -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>${version.antrun.plugin}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <phase>generate-test-resources</phase>
-                <configuration>
-                  <target>
-                    <zip basedir="../../" destfile="../../ObjectStore-${project.artifactId}.zip" includes="ObjectStore" whenempty="skip"></zip>
-                    <delete dir="../../ObjectStore" failonerror="false"></delete>
-                    <!-- We overwrite the config files as the config.to.replace can be different in different modules and without overwrite being the case, then the file will not be written over -->
-                    <copy file="${env.JBOSS_HOME}/standalone/configuration/${config.to.replace}" overwrite="true" tofile="${env.JBOSS_HOME}/standalone/configuration/${lra.coordinator.xml.filename}"></copy>
-                    <copy file="${env.JBOSS_HOME}/standalone/configuration/${config.to.replace}" overwrite="true" tofile="${env.JBOSS_HOME}/standalone/configuration/${lra.participant.xml.filename}"></copy>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!--
-            Wildfly is activated and configured through wildfly-maven-plugin instead
-            of using an Arquillian cluster. This design choice reflects the preference
-            to be consistent with the mechanism used to deploy lra-coordinator in
-            Quarkus. Moreover, the Microprofile LRA TCK does not allow to use multiple
-            Arquillian containers. As a consequence, lra-coordinator needs to be deployed
-            separately.
-          -->
-          <plugin>
-            <groupId>org.wildfly.plugins</groupId>
-            <artifactId>wildfly-maven-plugin</artifactId>
-            <version>${version.wildfly-maven-plugin}</version>
-            <configuration>
-              <skip>${skip.wildfly.plugin}</skip>
-            </configuration>
-
-            <executions>
-              <!-- Starts Wildfly -->
-              <execution>
-                <id>start</id>
-                <goals>
-                  <goal>start</goal>
-                  <goal>deploy-artifact</goal>
-                </goals>
-                <phase>pre-integration-test</phase>
-                <configuration>
-                  <!-- used by start -->
-                  <jbossHome>${env.JBOSS_HOME}</jbossHome>
-                  <serverConfig>${lra.coordinator.xml.filename}</serverConfig>
-                  <javaOpts>${server.jvm.args} ${server.jvm.object.store.arg}</javaOpts>
-
-                  <!-- used by deploy-artifact -->
-                  <groupId>org.jboss.narayana.rts</groupId>
-                  <artifactId>lra-coordinator-war</artifactId>
-                  <name>${lra.coordinator.war.name}</name>
-                  <force>true</force>
-                </configuration>
-              </execution>
-
-              <!-- Undeploys and Shutdowns Wildfly -->
-              <execution>
-                <id>undeploy</id>
-                <goals>
-                  <goal>undeploy</goal>
-                  <goal>shutdown</goal>
-                </goals>
-                <phase>post-integration-test</phase>
-                <configuration>
-                  <name>lra-coordinator.war</name>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-              <argLine>${server.jvm.args}</argLine>
-              <skipITs>false</skipITs>
-              <reportsDirectory>${project.build.directory}/failsafe-reports-arq</reportsDirectory>
-              <summaryFile>${project.build.directory}/failsafe-reports-arq/failsafe-summary.xml</summaryFile>
-              <systemProperties>
-                <arquillian.xml>arquillian-wildfly.xml</arquillian.xml>
-                <!-- qualifier used to identify the Wildfly cluster -->
-                <arquillian.group.qualifier>wildfly-cluster</arquillian.group.qualifier>
-                <!-- qualifier used to identify the Wildfly container where lra-coordinator will be deployed-->
-                <arquillian.lra.coordinator.container.qualifier>${lra.coordinator.container.qualifier}</arquillian.lra.coordinator.container.qualifier>
-                <!-- qualifier used to identify the Wildfly container where lra-participant will be deployed-->
-                <arquillian.lra.participant.container.qualifier>${lra.participant.container.qualifier}</arquillian.lra.participant.container.qualifier>
-                <!-- qualifier used to identify the lra-coordinator deployment-->
-                <arquillian.lra.coordinator.deployment.qualifier>${lra.coordinator.deployment.qualifier}</arquillian.lra.coordinator.deployment.qualifier>
-                <!-- qualifier used to identify the lra-participant deployment-->
-                <arquillian.lra.participant.deployment.qualifier>${lra.participant.deployment.qualifier}</arquillian.lra.participant.deployment.qualifier>
-                <!-- sharing with Arquillian the names of the XML standalone configurations for Wildfly instances -->
-                <lra.coordinator.xml.filename>${lra.coordinator.xml.filename}</lra.coordinator.xml.filename>
-                <lra.participant.xml.filename>${lra.participant.xml.filename}</lra.participant.xml.filename>
-                <!-- used to resolve the resteasy-client version -->
-                <version.resteasy-client>${version.resteasy-client}</version.resteasy-client>
-                <!-- used to resolve eclipse microprofile versions -->
-                <version.microprofile.lra>${version.microprofile.lra}</version.microprofile.lra>
-              </systemProperties>
-            </configuration>
-          </plugin>
-
-        </plugins>
-      </build>
     </profile>
-
     <profile>
       <id>debug.lra.coordinator</id>
       <activation>
@@ -313,7 +233,6 @@
         <lra.coordinator.debug.params>-Xrunjdwp:transport=dt_socket,address=${lra.coordinator.debug.port},server=y,suspend=y</lra.coordinator.debug.params>
       </properties>
     </profile>
-
     <profile>
       <id>trace.lra.coordinator</id>
       <activation>
@@ -322,19 +241,14 @@
         </property>
       </activation>
       <properties>
-        <!-- # Disabling console trace level logging (by default logger level is INFO)-->
+        <lra.coordinator.log.file.module.narayana>-Dquarkus.log.category."io.narayana.lra".level=TRACE</lra.coordinator.log.file.module.narayana>
         <lra.coordinator.log.console.disable>-Dquarkus.log.console.enable=false</lra.coordinator.log.console.disable>
-        <!--# Enabling file trace logging-->
+        <lra.coordinator.log.file.module.arjuna>-Dquarkus.log.category."com.arjuna".level=TRACE</lra.coordinator.log.file.module.arjuna>
+        <lra.coordinator.log.file.path>-Dquarkus.log.file.path=${project.build.directory}/failsafe-reports/lra-coordinator-trace.log</lra.coordinator.log.file.path>
         <lra.coordinator.log.file.enable>-Dquarkus.log.file.enable=true</lra.coordinator.log.file.enable>
         <lra.coordinator.log.file.level>-Dquarkus.log.file.level=TRACE</lra.coordinator.log.file.level>
-        <!--# Setting categories to TRACE level-->
-        <lra.coordinator.log.file.module.arjuna>-Dquarkus.log.category."com.arjuna".level=TRACE</lra.coordinator.log.file.module.arjuna>
-        <lra.coordinator.log.file.module.narayana>-Dquarkus.log.category."io.narayana.lra".level=TRACE</lra.coordinator.log.file.module.narayana>
-        <!--# Send output to a trace.log file under the target/failsafe-reports/ directory-->
-        <lra.coordinator.log.file.path>-Dquarkus.log.file.path=${project.build.directory}/failsafe-reports/lra-coordinator-trace.log</lra.coordinator.log.file.path>
       </properties>
     </profile>
-
     <profile>
       <id>start.lra.coodinator.before.it.tests</id>
       <activation>
@@ -351,17 +265,16 @@
             <executions>
               <execution>
                 <id>start-it-test-lra-coordinator</id>
+                <phase>${lra.coordinator.exec.plugin.phase}</phase>
                 <goals>
                   <goal>start</goal>
                 </goals>
-                <phase>${lra.coordinator.exec.plugin.phase}</phase>
                 <configuration>
                   <name>lra-coordinator-it-test</name>
                   <workingDir>${basedir}</workingDir>
                   <healthCheckUrl>${lra.coordinator.url}</healthCheckUrl>
                   <waitForInterrupt>false</waitForInterrupt>
                   <waitAfterLaunch>90</waitAfterLaunch>
-                  <!--<processLogFile>${project.build.directory}/failsafe-reports/lra-coordinator-startup.log</processLogFile>-->
                   <arguments>
                     <argument>${java.home}/bin/java</argument>
                     <argument>-Djava.net.preferIPv4Stack=true</argument>
@@ -383,10 +296,10 @@
               </execution>
               <execution>
                 <id>stop-it-test-lra-coordinator</id>
+                <phase>post-integration-test</phase>
                 <goals>
                   <goal>stop-all</goal>
                 </goals>
-                <phase>post-integration-test</phase>
               </execution>
             </executions>
           </plugin>
@@ -398,20 +311,14 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <inherited>false</inherited>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
         </plugins>
       </build>
@@ -422,7 +329,6 @@
         <jdk>[17,)</jdk>
       </activation>
       <properties>
-        <!-- At least org.eclipse.microprofile.lra.tck.TckUnknownStatusTests needs java.base/java.lang and java.base/java.lang.reflect -->
         <jvm.args.modular>--add-opens=java.base/java.lang=ALL-UNNAMED
           --add-opens=java.base/java.lang.reflect=ALL-UNNAMED</jvm.args.modular>
       </properties>
