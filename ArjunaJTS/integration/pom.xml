@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- JBoss, Home of Professional Open Source Copyright 2008, Red Hat Middleware 
-	LLC, and others contributors as indicated by the @authors tag. All rights 
-	reserved. See the copyright.txt in the distribution for a full listing of 
-	individual contributors. This copyrighted material is made available to anyone 
-	wishing to use, modify, copy, or redistribute it subject to the terms and 
-	conditions of the GNU Lesser General Public License, v. 2.1. This program 
-	is distributed in the hope that it will be useful, but WITHOUT A WARRANTY; 
-	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-	PURPOSE. See the GNU Lesser General Public License for more details. You 
-	should have received a copy of the GNU Lesser General Public License, v.2.1 
-	along with this distribution; if not, write to the Free Software Foundation, 
-	Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.jts</groupId>
     <artifactId>narayana-jts-all</artifactId>
     <version>5.13.0.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>narayana-jts-integration</artifactId>
-  <packaging>jar</packaging>
   <name>Narayana: ArjunaJTS integration</name>
   <description>Narayana: ArjunaJTS integration (atx)</description>
-
   <properties>
     <modular.jdk.args>--upgrade-module-path ${project.build.directory}/upgrademodulepath</modular.jdk.args>
   </properties>
@@ -62,7 +48,6 @@
       <groupId>org.jboss.integration</groupId>
       <artifactId>jboss-corba-ots-spi</artifactId>
       <version>${version.org.jboss.integration}</version>
-      <!-- TODO AS7 -->
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -126,43 +111,17 @@
       </exclusions>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-      <!--
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Specification-Title>JTA/JTS</Specification-Title>
-              <Specification-Version>1.2/1.0</Specification-Version>
-              <Specification-Vendor>Oracle</Specification-Vendor>
-              <Implementation-Version>${project.version} (revision: ${buildNumber})</Implementation-Version>
-              <arjuna-scm-revision>${buildNumber}</arjuna-scm-revision>
-              <arjuna-properties-file>jbossts-properties.xml</arjuna-properties-file>
-              <arjuna-builder>JBoss Inc. [${user.name}] ${os.name} ${os.version} ${buildproperty.date}</arjuna-builder>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-      -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <executions>
           <execution>
             <id>default-test</id>
+            <phase>test</phase>
             <goals>
               <goal>test</goal>
             </goals>
-            <phase>test</phase>
             <configuration>
               <useManifestOnlyJar>false</useManifestOnlyJar>
               <skip>true</skip>
@@ -173,20 +132,20 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <doCheck>false</doCheck>
           <doUpdate>false</doUpdate>
           <shortRevisionLength>5</shortRevisionLength>
           <revisionOnScmFailure>${project.version}-noscm</revisionOnScmFailure>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>create</goal>
-            </goals>
-            <phase>validate</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -196,32 +155,30 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>create_javadocs</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
             <configuration>
               <source>8</source>
               <detectOfflineLinks>false</detectOfflineLinks>
             </configuration>
-            <executions>
-              <execution>
-                <id>create_javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-                <phase>prepare-package</phase>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>
@@ -236,10 +193,10 @@
             <executions>
               <execution>
                 <id>add-source</id>
+                <phase>process-sources</phase>
                 <goals>
                   <goal>add-source</goal>
                 </goals>
-                <phase>process-sources</phase>
                 <configuration>
                   <sources>
                     <source>${project.build.directory}/generated-sources/annotations/</source>

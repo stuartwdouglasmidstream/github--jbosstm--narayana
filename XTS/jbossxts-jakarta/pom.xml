@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-
-   Copyright The Narayana Authors
-
-   SPDX-License-Identifier: LGPL-2.1-only
-
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.xts</groupId>
     <artifactId>xts-all</artifactId>
     <version>5.13.0.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>jbossxts-jakarta</artifactId>
-  <packaging>jar</packaging>
   <name>Narayana: XTS Jakarta jbossxts</name>
   <description>Narayana: XTS Jakarta jbossxts</description>
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.narayana.xts</groupId>
+      <artifactId>jbossxts</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.narayana.xts</groupId>
+      <artifactId>jbossxts</artifactId>
+      <version>${project.version}</version>
+      <classifier>api</classifier>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -31,18 +36,18 @@
             </goals>
             <configuration>
               <target>
-                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+                <property name="plugin_classpath" refid="maven.plugin.classpath" />
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
-                  <arg value="${org.jboss.narayana.xts:jbossxts:jar}"/>
-                  <arg value="${project.build.directory}/${project.build.finalName}.jar"/>
-                  <arg value="-q"/>
-                  <arg value="-o"/>
-                  <arg value="-tr"/>
-                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties"/>
-                  <arg value="-td"/>
-                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-direct.properties"/>
+                  <arg value="${org.jboss.narayana.xts:jbossxts:jar}" />
+                  <arg value="${project.build.directory}/${project.build.finalName}.jar" />
+                  <arg value="-q" />
+                  <arg value="-o" />
+                  <arg value="-tr" />
+                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties" />
+                  <arg value="-td" />
+                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-direct.properties" />
                   <classpath>
-                    <pathelement path="${plugin_classpath}"/>
+                    <pathelement path="${plugin_classpath}" />
                   </classpath>
                 </java>
               </target>
@@ -56,18 +61,18 @@
             </goals>
             <configuration>
               <target>
-                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+                <property name="plugin_classpath" refid="maven.plugin.classpath" />
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
-                  <arg value="${org.jboss.narayana.xts:jbossxts:jar:api}"/>
-                  <arg value="${project.build.directory}/${project.build.finalName}-api.jar"/>
-                  <arg value="-q"/>
-                  <arg value="-o"/>
-                  <arg value="-tr"/>
-                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties"/>
-                  <arg value="-td"/>
-                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-direct.properties"/>
+                  <arg value="${org.jboss.narayana.xts:jbossxts:jar:api}" />
+                  <arg value="${project.build.directory}/${project.build.finalName}-api.jar" />
+                  <arg value="-q" />
+                  <arg value="-o" />
+                  <arg value="-tr" />
+                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties" />
+                  <arg value="-td" />
+                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-direct.properties" />
                   <classpath>
-                    <pathelement path="${plugin_classpath}"/>
+                    <pathelement path="${plugin_classpath}" />
                   </classpath>
                 </java>
               </target>
@@ -81,21 +86,17 @@
             </goals>
             <configuration>
               <target>
-                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
-                <ac:propertyregex xmlns:ac="antlib:net.sf.antcontrib" property="source"
-                                  input="${org.jboss.narayana.xts:jbossxts:jar}"
-                                  regexp="\.jar$"
-                                  replace="-sources.jar"
-                                  global="true" />
+                <property name="plugin_classpath" refid="maven.plugin.classpath" />
+                <ac:propertyregex input="${org.jboss.narayana.xts:jbossxts:jar}" regexp="\.jar$" xmlns:ac="antlib:net.sf.antcontrib" property="source" replace="-sources.jar" global="true" />
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
-                  <arg value="${source}"/>
-                  <arg value="${project.build.directory}/${project.build.finalName}-sources.jar"/>
-                  <arg value="-q"/>
-                  <arg value="-o"/>
-                  <arg value="-tr"/>
-                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties"/>
+                  <arg value="${source}" />
+                  <arg value="${project.build.directory}/${project.build.finalName}-sources.jar" />
+                  <arg value="-q" />
+                  <arg value="-o" />
+                  <arg value="-tr" />
+                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties" />
                   <classpath>
-                    <pathelement path="${plugin_classpath}"/>
+                    <pathelement path="${plugin_classpath}" />
                   </classpath>
                 </java>
               </target>
@@ -109,21 +110,17 @@
             </goals>
             <configuration>
               <target>
-                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
-                <ac:propertyregex xmlns:ac="antlib:net.sf.antcontrib" property="source"
-                                  input="${org.jboss.narayana.xts:jbossxts:jar}"
-                                  regexp="\.jar$"
-                                  replace="-javadoc.jar"
-                                  global="true" />
+                <property name="plugin_classpath" refid="maven.plugin.classpath" />
+                <ac:propertyregex input="${org.jboss.narayana.xts:jbossxts:jar}" regexp="\.jar$" xmlns:ac="antlib:net.sf.antcontrib" property="source" replace="-javadoc.jar" global="true" />
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
-                  <arg value="${source}"/>
-                  <arg value="${project.build.directory}/${project.build.finalName}-javadoc.jar"/>
-                  <arg value="-q"/>
-                  <arg value="-o"/>
-                  <arg value="-tr"/>
-                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties"/>
+                  <arg value="${source}" />
+                  <arg value="${project.build.directory}/${project.build.finalName}-javadoc.jar" />
+                  <arg value="-q" />
+                  <arg value="-o" />
+                  <arg value="-tr" />
+                  <arg value="${project.basedir}/../../jakarta-rules/jakarta-renames.properties" />
                   <classpath>
-                    <pathelement path="${plugin_classpath}"/>
+                    <pathelement path="${plugin_classpath}" />
                   </classpath>
                 </java>
               </target>
@@ -149,38 +146,14 @@
           </dependency>
         </dependencies>
       </plugin>
-      <plugin>
-        <inherited>false</inherited>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-      </plugin>
     </plugins>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>org.jboss.narayana.xts</groupId>
-      <artifactId>jbossxts</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.narayana.xts</groupId>
-      <artifactId>jbossxts</artifactId>
-      <version>${project.version}</version>
-      <classifier>api</classifier>
-    </dependency>
-  </dependencies>
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <inherited>false</inherited>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
             <executions>
               <execution>
