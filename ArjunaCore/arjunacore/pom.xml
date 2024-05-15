@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.arjunacore</groupId>
     <artifactId>arjunacore-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>arjunacore</artifactId>
   <name>Narayana: ArjunaCore arjunacore</name>
   <description>ArjunaCore packaged module</description>
-  <packaging>jar</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.narayana</groupId>
+      <artifactId>common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.narayana.arjunacore</groupId>
+      <artifactId>arjuna</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.narayana.arjunacore</groupId>
+      <artifactId>txoj</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging-processor</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
-        <inherited>false</inherited>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <archive>
@@ -65,7 +77,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
@@ -106,64 +117,38 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>org.jboss.narayana</groupId>
-      <artifactId>common</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.narayana.arjunacore</groupId>
-      <artifactId>arjuna</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.narayana.arjunacore</groupId>
-      <artifactId>txoj</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.logging</groupId>
-      <artifactId>jboss-logging</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.logging</groupId>
-      <artifactId>jboss-logging-processor</artifactId>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
   <profiles>
-  <profile>
-    <id>community</id>
-    <dependencies>
-      <dependency>
-        <groupId>orson</groupId>
-        <artifactId>orson</artifactId>
-        <version>${version.orson}</version>
-        <scope>system</scope>
-        <systemPath>${orson.jar.location}/orson-0.5.0.jar</systemPath>
-      </dependency>
-        <dependency>
-        <groupId>org.jfree</groupId>
-        <artifactId>jfreechart</artifactId>
-      </dependency>
-    </dependencies>
-  </profile>  
     <profile>
-        <id>release</id>
-        <build>
-          <plugins>
-              <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <executions>
-                  <execution>
-                    <id>default-install</id>
-                    <phase>install</phase>
-                  </execution>
-                </executions>
-                <inherited>false</inherited>
-              </plugin>
+      <id>community</id>
+      <dependencies>
+        <dependency>
+          <groupId>orson</groupId>
+          <artifactId>orson</artifactId>
+          <version>${version.orson}</version>
+          <scope>system</scope>
+          <systemPath>${orson.jar.location}/orson-0.5.0.jar</systemPath>
+        </dependency>
+        <dependency>
+          <groupId>org.jfree</groupId>
+          <artifactId>jfreechart</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-install-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-install</id>
+                <phase>install</phase>
+              </execution>
+            </executions>
+            <inherited>false</inherited>
+          </plugin>
+          <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
             <executions>
               <execution>
