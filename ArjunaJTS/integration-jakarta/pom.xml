@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-
-   Copyright The Narayana Authors
-
-   SPDX-License-Identifier: LGPL-2.1-only
-
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.jts</groupId>
     <artifactId>narayana-jts-all</artifactId>
     <version>5.13.0.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>narayana-jts-integration-jakarta</artifactId>
-  <packaging>jar</packaging>
   <name>Narayana: ArjunaJTS integration Jakarta</name>
   <description>Narayana: ArjunaJTS integration (atx) Jakarta</description>
-
   <properties>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
     <sortpom.skip>false</sortpom.skip>
@@ -30,36 +21,17 @@
       <version>${project.version}</version>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-        <dependencies>
-          <dependency>
-            <groupId>org.eclipse.transformer</groupId>
-            <artifactId>org.eclipse.transformer.cli</artifactId>
-            <version>${version.org.eclipse.transformer}</version>
-          </dependency>
-          <dependency>
-            <groupId>ant-contrib</groupId>
-            <artifactId>ant-contrib</artifactId>
-            <version>${version.ant-contrib}</version>
-            <exclusions>
-              <exclusion>
-                <groupId>ant</groupId>
-                <artifactId>ant</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-        </dependencies>
         <executions>
           <execution>
             <id>transform-jar</id>
+            <phase>package</phase>
             <goals>
               <goal>run</goal>
             </goals>
-            <phase>package</phase>
             <configuration>
               <target>
                 <property name="plugin_classpath" refid="maven.plugin.classpath"></property>
@@ -79,14 +51,14 @@
           </execution>
           <execution>
             <id>transform-sources-jar</id>
+            <phase>package</phase>
             <goals>
               <goal>run</goal>
             </goals>
-            <phase>package</phase>
             <configuration>
               <target>
                 <property name="plugin_classpath" refid="maven.plugin.classpath"></property>
-                <ac:propertyregex xmlns:ac="antlib:net.sf.antcontrib" global="true" input="${org.jboss.narayana.jts:narayana-jts-integration:jar}" property="source" regexp="\.jar$" replace="-sources.jar"></ac:propertyregex>
+                <ac:propertyregex input="${org.jboss.narayana.jts:narayana-jts-integration:jar}" regexp="\.jar$" xmlns:ac="antlib:net.sf.antcontrib" property="source" replace="-sources.jar" global="true"></ac:propertyregex>
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
                   <arg value="${source}"></arg>
                   <arg value="${project.build.directory}/${project.build.finalName}-sources.jar"></arg>
@@ -103,14 +75,14 @@
           </execution>
           <execution>
             <id>transform-javadoc</id>
+            <phase>package</phase>
             <goals>
               <goal>run</goal>
             </goals>
-            <phase>package</phase>
             <configuration>
               <target>
                 <property name="plugin_classpath" refid="maven.plugin.classpath"></property>
-                <ac:propertyregex xmlns:ac="antlib:net.sf.antcontrib" global="true" input="${org.jboss.narayana.jts:narayana-jts-integration:jar}" property="source" regexp="\.jar$" replace="-javadoc.jar"></ac:propertyregex>
+                <ac:propertyregex input="${org.jboss.narayana.jts:narayana-jts-integration:jar}" regexp="\.jar$" xmlns:ac="antlib:net.sf.antcontrib" property="source" replace="-javadoc.jar" global="true"></ac:propertyregex>
                 <java classname="org.eclipse.transformer.jakarta.JakartaTransformer">
                   <arg value="${source}"></arg>
                   <arg value="${project.build.directory}/${project.build.finalName}-javadoc.jar"></arg>
@@ -126,30 +98,41 @@
             </configuration>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.eclipse.transformer</groupId>
+            <artifactId>org.eclipse.transformer.cli</artifactId>
+            <version>${version.org.eclipse.transformer}</version>
+          </dependency>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>${version.ant-contrib}</version>
+            <exclusions>
+              <exclusion>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <inherited>false</inherited>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -157,10 +140,10 @@
             <executions>
               <execution>
                 <id>javadoc</id>
+                <phase>package</phase>
                 <goals>
                   <goal>attach-artifact</goal>
                 </goals>
-                <phase>package</phase>
                 <configuration>
                   <artifacts>
                     <artifact>
@@ -173,10 +156,10 @@
               </execution>
               <execution>
                 <id>sources</id>
+                <phase>package</phase>
                 <goals>
                   <goal>attach-artifact</goal>
                 </goals>
-                <phase>package</phase>
                 <configuration>
                   <artifacts>
                     <artifact>
