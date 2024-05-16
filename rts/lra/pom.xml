@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.rts</groupId>
     <artifactId>rest-tx</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-
   <artifactId>lra-parent</artifactId>
   <packaging>pom</packaging>
   <name>LRA Parent</name>
   <description>LRA Parent</description>
-
   <modules>
     <module>service-base</module>
     <module>client</module>
@@ -26,21 +20,15 @@
     <module>test</module>
     <module>jaxrs</module>
   </modules>
-
   <properties>
-    <!-- integration tests are disabled by default, use profile to run 'arq' -->
     <checkstyle.skip>false</checkstyle.skip>
-
-    <lra.test.timeout.factor>1.0</lra.test.timeout.factor>
-
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
     <skipITs>true</skipITs>
-    <sortpom.skip>false</sortpom.skip>
-
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <lra.test.timeout.factor>1.0</lra.test.timeout.factor>
+    <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
     <test.logs.to.file>false</test.logs.to.file>
+    <sortpom.skip>false</sortpom.skip>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -53,7 +41,6 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <!-- for testing -->
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
@@ -65,7 +52,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <repositories>
     <repository>
       <id>jboss-public-releases-repository-group</id>
@@ -81,33 +67,10 @@
       <url>https://repo.eclipse.org/content/repositories/microprofile-snapshots</url>
     </repository>
   </repositories>
-
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <configuration>
-          <redirectTestOutputToFile>${test.logs.to.file}</redirectTestOutputToFile>
-          <skipITs>${skipITs}</skipITs>
-          <systemPropertyVariables>
-            <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties</java.util.logging.config.file>
-            <maven.test.classes.dir>${project.build.testOutputDirectory}</maven.test.classes.dir>
-          </systemPropertyVariables>
-          <includes>
-            <!-- Integration tests running at the container -->
-            <include>*IT.java</include>
-            <include>*Tests.java</include>
-            <!-- LRA TCK tests are named with 'Tests.java' -->
-            <include>*TestCase.java</include>
-          </includes>
-        </configuration>
         <executions>
           <execution>
             <goals>
@@ -116,36 +79,44 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <redirectTestOutputToFile>${test.logs.to.file}</redirectTestOutputToFile>
+          <skipITs>${skipITs}</skipITs>
+          <systemPropertyVariables>
+            <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties</java.util.logging.config.file>
+            <maven.test.classes.dir>${project.build.testOutputDirectory}</maven.test.classes.dir>
+          </systemPropertyVariables>
+          <includes>
+            <include>*IT.java</include>
+            <include>*Tests.java</include>
+            <include>*TestCase.java</include>
+          </includes>
+        </configuration>
       </plugin>
-      <!-- Running only integration tests with failsafe plugin -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <includes>
-            <!-- Unit tests running with no container involved -->
             <include>*Test.java</include>
           </includes>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
         </plugins>
       </build>

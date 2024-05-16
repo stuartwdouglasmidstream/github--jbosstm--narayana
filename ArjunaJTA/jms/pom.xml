@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.jta</groupId>
@@ -14,7 +10,6 @@
   <artifactId>jms</artifactId>
   <name>Narayana: ArjunaJTA JMS</name>
   <description>Narayana JMS integration</description>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -26,7 +21,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.jboss.narayana.jta</groupId>
@@ -52,7 +46,6 @@
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
       <exclusions>
-        <!-- JUnit already comes with Hamcrest -->
         <exclusion>
           <groupId>org.hamcrest</groupId>
           <artifactId>hamcrest-core</artifactId>
@@ -90,27 +83,20 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <inherited>false</inherited>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
         </plugins>
       </build>

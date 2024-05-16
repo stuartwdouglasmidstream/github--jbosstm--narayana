@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.jta</groupId>
     <artifactId>narayana-jta-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>jta</artifactId>
-  <packaging>jar</packaging>
   <name>Narayana: ArjunaJTA jta</name>
   <description>Narayana: ArjunaJTA jta</description>
-
   <properties>
-    <!-- java.net.preferIPv6Addresses=false is a workaround to (not) solve the bug in arquillian-extension-byteman -->
     <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1]
       -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=false</ipv6.server.jvm.args>
     <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -35,9 +27,6 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <!-- JTA (local: ArjunaJTA/jta and remote: ArjunaJTS/jtax) needs:
-     * Jakarta Transaction API (jakarta.transaction-api)
-     * Jakarta Connectors (for tx inflow) API (jakarta.resource-api) -->
     <dependency>
       <groupId>jakarta.transaction</groupId>
       <artifactId>jakarta.transaction-api</artifactId>
@@ -67,7 +56,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.jboss.narayana</groupId>
       <artifactId>common</artifactId>
@@ -137,15 +125,15 @@
       <artifactId>jnpserver</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.jboss.narayana</groupId>
       <artifactId>test-utils</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
+    <sourceDirectory>classes</sourceDirectory>
+    <testSourceDirectory>tests/classes</testSourceDirectory>
     <resources>
       <resource>
         <directory>etc</directory>
@@ -161,20 +149,14 @@
     </testResources>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <executions>
           <execution>
             <id>default-testCompile</id>
+            <phase>test-compile</phase>
             <goals>
               <goal>testCompile</goal>
             </goals>
-            <phase>test-compile</phase>
             <configuration>
               <testExcludes>
                 <exclude>io/narayana/perf/product/*.java</exclude>
@@ -185,19 +167,16 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <useManifestOnlyJar>false</useManifestOnlyJar>
           <excludes>
             <exclude>**/io/narayana/perf/product/*</exclude>
-            <!-- exclude tests which were run above using byteman scripts -->
             <exclude>**/recovery/CrashRecovery.java</exclude>
           </excludes>
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
           <execution>
@@ -209,104 +188,54 @@
         </executions>
       </plugin>
     </plugins>
-    <sourceDirectory>classes</sourceDirectory>
-    <testSourceDirectory>tests/classes</testSourceDirectory>
   </build>
-
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
         </plugins>
       </build>
     </profile>
-    <!-- For further info about this profile, refer to https://github.com/arquillian/arquillian-extension-byteman -->
     <profile>
       <id>use-toolsjar-jigsaw</id>
       <activation>
         <jdk>[11,)</jdk>
       </activation>
       <properties>
-        <byteman.agent.support>-Djboss.modules.system.pkgs=com.sun.tools.attach,org.jboss.byteman -Djdk.attach.allowAttachSelf=true</byteman.agent.support>
-        <!-- required for VM attach under JDK 11-->
         <surefire.argline>-Djdk.attach.allowAttachSelf=true</surefire.argline>
+        <byteman.agent.support>-Djboss.modules.system.pkgs=com.sun.tools.attach,org.jboss.byteman -Djdk.attach.allowAttachSelf=true</byteman.agent.support>
       </properties>
     </profile>
     <profile>
       <id>arq</id>
       <activation>
-        <activeByDefault>false</activeByDefault>
         <property>
           <name>arqProfileActivated</name>
           <value>arq</value>
         </property>
       </activation>
-      <dependencies>
-        <dependency>
-          <groupId>org.jboss.arquillian.core</groupId>
-          <artifactId>arquillian-core-api</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.arquillian.protocol</groupId>
-          <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.arquillian.junit</groupId>
-          <artifactId>arquillian-junit-container</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.arquillian.extension</groupId>
-          <artifactId>arquillian-extension-byteman</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.wildfly.extras.creaper</groupId>
-          <artifactId>creaper-core</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.wildfly.core</groupId>
-          <artifactId>wildfly-controller-client</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.wildfly.core</groupId>
-          <artifactId>wildfly-cli</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.wildfly.arquillian</groupId>
-          <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>
               <execution>
                 <id>arq-testCompile</id>
+                <phase>test-compile</phase>
                 <goals>
                   <goal>testCompile</goal>
                 </goals>
-                <phase>test-compile</phase>
                 <configuration>
                   <testIncludes>
                     <include>**/integration/*IntegrationTest.java</include>
@@ -320,9 +249,6 @@
             <configuration>
               <argLine>${surefire.argline}</argLine>
               <systemPropertyVariables combine.children="append">
-                <!--
-                    Used in arquillian.xml
-                -->
                 <server.jvm.args>${server.jvm.args} ${byteman.agent.support}</server.jvm.args>
                 <node.address>127.0.0.1</node.address>
               </systemPropertyVariables>
@@ -337,16 +263,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>arqIPv6</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <property>
-          <name>arqProfileActivated</name>
-          <value>arqIPv6</value>
-        </property>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.jboss.arquillian.core</groupId>
@@ -389,18 +305,26 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>arqIPv6</id>
+      <activation>
+        <property>
+          <name>arqProfileActivated</name>
+          <value>arqIPv6</value>
+        </property>
+      </activation>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>
               <execution>
                 <id>arqIPv6-testCompile</id>
+                <phase>test-compile</phase>
                 <goals>
                   <goal>testCompile</goal>
                 </goals>
-                <phase>test-compile</phase>
                 <configuration>
                   <testIncludes>
                     <include>**/integration/*IntegrationTest.java</include>
@@ -410,14 +334,10 @@
             </executions>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <argLine>${surefire.argline}</argLine>
               <systemPropertyVariables combine.children="append">
-                <!--
-                                    Used in arquillian.xml
-                                -->
                 <server.jvm.args>${server.jvm.args} ${byteman.agent.support} ${ipv6.server.jvm.args}</server.jvm.args>
                 <node.address>[::1]</node.address>
               </systemPropertyVariables>
@@ -432,6 +352,48 @@
           </plugin>
         </plugins>
       </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.core</groupId>
+          <artifactId>arquillian-core-api</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.arquillian.protocol</groupId>
+          <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.arquillian.junit</groupId>
+          <artifactId>arquillian-junit-container</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.arquillian.extension</groupId>
+          <artifactId>arquillian-extension-byteman</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.wildfly.extras.creaper</groupId>
+          <artifactId>creaper-core</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.wildfly.core</groupId>
+          <artifactId>wildfly-controller-client</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.wildfly.core</groupId>
+          <artifactId>wildfly-cli</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.wildfly.arquillian</groupId>
+          <artifactId>wildfly-arquillian-container-managed</artifactId>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
     </profile>
     <profile>
       <id>commitMarkableResourcePerf</id>
@@ -441,21 +403,6 @@
           <artifactId>db2jcc</artifactId>
           <scope>test</scope>
         </dependency>
-        <!--
-        <dependency>
-          <groupId>com.microsoft.sqlserver</groupId>
-          <artifactId>sqljdbc4</artifactId>
-          <systemPath>${orson.jar.location}/../qa/dbdrivers/mssql2005_sqljdbc_2.0/enu/sqljdbc4.jar
-          </systemPath>
-          <scope>system</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.sybase.jdbcx</groupId>
-          <artifactId>jconn4</artifactId>
-          <systemPath>${orson.jar.location}/../qa/dbdrivers/jConnect-6_0/classes/jconn3.jar</systemPath>
-          <scope>system</scope>
-        </dependency>
-        -->
         <dependency>
           <groupId>com.oracle.database.jdbc</groupId>
           <artifactId>ojdbc10</artifactId>

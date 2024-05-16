@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-
   <parent>
     <groupId>org.jboss.narayana</groupId>
     <artifactId>narayana-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <groupId>org.jboss.narayana.xts</groupId>
   <artifactId>xts-all</artifactId>
@@ -86,30 +81,21 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-    </plugins>
-  </build>
+  <build />
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
         </plugins>
       </build>
