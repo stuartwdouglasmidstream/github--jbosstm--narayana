@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.arjunacore</groupId>
     <artifactId>arjunacore-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>arjuna</artifactId>
   <name>Narayana: ArjunaCore arjuna</name>
   <description>Narayana: ArjunaCore Arjuna</description>
-  <packaging>jar</packaging>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -29,75 +21,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
-  <build>
-    <sourceDirectory>classes</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>etc</directory>
-      </resource>
-    </resources>
-    <testSourceDirectory>tests/classes</testSourceDirectory>
-    <testResources>
-      <testResource>
-        <directory>src/test/resources</directory>
-      </testResource>
-      <testResource>
-        <directory>tests/byteman-scripts</directory>
-      </testResource>
-    </testResources>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <useManifestOnlyJar>false</useManifestOnlyJar>
-          <excludes>
-            <!-- exclude tests that load the byteman agent (BMUnitRunner) -->
-            <exclude>**/RecoveryManagerStartStopTest.java</exclude>
-            <exclude>**/LogStoreTest2.java</exclude>
-            <exclude>**/LogStoreRecoveryTest.java</exclude>
-            <exclude>**/ReaperMonitorTest.java</exclude>
-            <exclude>**/ReaperTestCase3.java</exclude>
-            <exclude>**/ReaperTestCase2.java</exclude>
-            <exclude>**/ReaperTestCase.java</exclude>
-            <!-- not sure why these are excluded -->
-            <exclude>**/resources/**</exclude>
-            <exclude>**/DummyCheckedAction.java</exclude>
-            <exclude>**/MyAccess.java</exclude>
-            <exclude>**/Worker.java</exclude>
-            <exclude>**/BasicCrashRecord.java</exclude>
-            <exclude>**/DummyRecoveryModule.java</exclude>
-            <exclude>**/CrashAbstractRecord*.java</exclude>
-            <exclude>**/RecoveryTransaction.java</exclude>
-            <exclude>**/UserDefFirst0Setup.java</exclude>
-            <exclude>**/CachedTest.java</exclude>
-            <!-- LogStressTest2 takes too long - needs moving to /qa -->
-            <exclude>**/LogStressTest2.java</exclude>
-            <!-- auxilairy code used by reaper test classes -->
-            <exclude>**/reaper/ReaperTestCaseControl.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <inherited>false</inherited>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>com/arjuna/ats/arjuna/tools/stats/TxPerfGraph.java</exclude>
-            <exclude>com/arjuna/ats/arjuna/tools/stats/TxPerfPlugin.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <inherited>false</inherited>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
   <dependencies>
     <dependency>
       <groupId>org.jboss.narayana</groupId>
@@ -140,13 +63,11 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--JUnit Jupiter Engine to depend on the JUnit5 engine and JUnit 5 API -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--JUnit Jupiter Engine to depend on the JUnit4 engine and JUnit 4 API  -->
     <dependency>
       <groupId>org.junit.vintage</groupId>
       <artifactId>junit-vintage-engine</artifactId>
@@ -168,7 +89,62 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
+  <build>
+    <sourceDirectory>classes</sourceDirectory>
+    <testSourceDirectory>tests/classes</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>etc</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>tests/byteman-scripts</directory>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <useManifestOnlyJar>false</useManifestOnlyJar>
+          <excludes>
+            <exclude>**/RecoveryManagerStartStopTest.java</exclude>
+            <exclude>**/LogStoreTest2.java</exclude>
+            <exclude>**/LogStoreRecoveryTest.java</exclude>
+            <exclude>**/ReaperMonitorTest.java</exclude>
+            <exclude>**/ReaperTestCase3.java</exclude>
+            <exclude>**/ReaperTestCase2.java</exclude>
+            <exclude>**/ReaperTestCase.java</exclude>
+            <exclude>**/resources/**</exclude>
+            <exclude>**/DummyCheckedAction.java</exclude>
+            <exclude>**/MyAccess.java</exclude>
+            <exclude>**/Worker.java</exclude>
+            <exclude>**/BasicCrashRecord.java</exclude>
+            <exclude>**/DummyRecoveryModule.java</exclude>
+            <exclude>**/CrashAbstractRecord*.java</exclude>
+            <exclude>**/RecoveryTransaction.java</exclude>
+            <exclude>**/UserDefFirst0Setup.java</exclude>
+            <exclude>**/CachedTest.java</exclude>
+            <exclude>**/LogStressTest2.java</exclude>
+            <exclude>**/reaper/ReaperTestCaseControl.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <inherited>false</inherited>
+        <configuration>
+          <excludes>
+            <exclude>com/arjuna/ats/arjuna/tools/stats/TxPerfGraph.java</exclude>
+            <exclude>com/arjuna/ats/arjuna/tools/stats/TxPerfPlugin.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <profiles>
     <profile>
       <id>linux-windows</id>
@@ -209,7 +185,6 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
             <executions>
               <execution>
@@ -222,22 +197,11 @@
         </plugins>
       </build>
     </profile>
-    <!--
     <profile>
-      <id>sybase-jdbc-store</id>
-      <dependencies>
-        <dependency>
-          <groupId>com.sybase.jConnect</groupId>
-          <artifactId>jconn3</artifactId>
-          <version>${version.com.sybase.jConnect}</version>
-          <scope>system</scope>
-          <systemPath>${orson.jar.location}/../qa/dbdrivers/jConnect-6_0/classes/jconn3.jar</systemPath>
-        </dependency>
-      </dependencies>
+      <id>oracle-jdbc-store</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <systemProperties>
@@ -250,10 +214,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    -->
-    <profile>
-      <id>oracle-jdbc-store</id>
       <dependencies>
         <dependency>
           <groupId>com.oracle.database.jdbc</groupId>
@@ -261,10 +221,12 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>db2-jdbc-store</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <systemProperties>
@@ -277,9 +239,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>db2-jdbc-store</id>
       <dependencies>
         <dependency>
           <groupId>com.ibm.db2.jcc</groupId>
@@ -287,10 +246,12 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>postgres-jdbc-store</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <systemProperties>
@@ -303,9 +264,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>postgres-jdbc-store</id>
       <dependencies>
         <dependency>
           <groupId>org.postgresql</groupId>
@@ -313,10 +271,12 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>mysql-jdbc-store</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <systemProperties>
@@ -329,9 +289,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>mysql-jdbc-store</id>
       <dependencies>
         <dependency>
           <groupId>com.mysql</groupId>
@@ -339,10 +296,12 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>mariadb-jdbc-store</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <systemProperties>
@@ -355,9 +314,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>mariadb-jdbc-store</id>
       <dependencies>
         <dependency>
           <groupId>org.mariadb.jdbc</groupId>
@@ -365,56 +321,20 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <systemProperties>
-                <property>
-                  <name>com.arjuna.ats.arjuna.common.propertiesFile</name>
-                  <value>dbjbossts-properties.xml</value>
-                </property>
-              </systemProperties>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
-
-    <!--
-    <profile>
-      <id>mssql-jdbc-store</id>
-      <dependencies>
-        <dependency>
-          <groupId>com.microsoft.sqlserver</groupId>
-          <artifactId>sqljdbc4</artifactId>
-          <version>${version.com.microsoft.sqlserver}</version>
-          <systemPath>${orson.jar.location}/../qa/dbdrivers/mssql2005_sqljdbc_2.0/enu/sqljdbc4.jar</systemPath>
-          <scope>system</scope>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <systemProperties>
-                <property>
-                  <name>com.arjuna.ats.arjuna.common.propertiesFile</name>
-                  <value>dbjbossts-properties.xml</value>
-                </property>
-              </systemProperties>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    -->
     <profile>
       <id>community</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <inherited>false</inherited>
+            <configuration combine.children="append">
+              <excludes></excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
       <dependencies>
         <dependency>
           <groupId>orson</groupId>
@@ -428,31 +348,15 @@
           <artifactId>jfreechart</artifactId>
         </dependency>
       </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <inherited>false</inherited>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration combine.children="append">
-              <excludes>
-              </excludes>
-            </configuration>
-
-          </plugin>
-        </plugins>
-      </build>
     </profile>
     <profile>
       <id>codeCoverage</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <excludes>
-                <!-- stress tests are not unit tests -->
                 <exclude>**/LogStressTest2.java</exclude>
               </excludes>
               <systemProperties>
@@ -461,7 +365,6 @@
                   <value>h2jbossts-properties.xml</value>
                 </property>
               </systemProperties>
-
             </configuration>
           </plugin>
         </plugins>
