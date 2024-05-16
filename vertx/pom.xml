@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-  <!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana</groupId>
     <artifactId>narayana-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.vertx</groupId>
   <artifactId>narayana-vertx</artifactId>
   <packaging>pom</packaging>
   <name>Narayana: STM vertex</name>
   <description>STM vertex</description>
   <url>http://http://narayana.io</url>
-
+  <modules>
+    <module>module</module>
+    <module>shared</module>
+  </modules>
+  <properties>
+    <sortpom.skip>true</sortpom.skip>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -30,28 +31,13 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
- 
-  <build>
-    <plugins>
-      <plugin>
-        <inherited>false</inherited>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
-  <properties>
-    <sortpom.skip>true</sortpom.skip>
-  </properties>
-
+  <build />
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
             <executions>
               <execution>
@@ -65,9 +51,4 @@
       </build>
     </profile>
   </profiles>
-
-  <modules>
-    <module>module</module>
-    <module>shared</module>
-  </modules>
 </project>

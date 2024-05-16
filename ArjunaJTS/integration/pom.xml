@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright The Narayana Authors
-   SPDX short identifier: Apache-2.0
- -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.jts</groupId>
     <artifactId>narayana-jts-all</artifactId>
     <version>7.0.1.Final</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>narayana-jts-integration</artifactId>
-  <packaging>jar</packaging>
   <name>Narayana: ArjunaJTS integration</name>
   <description>Narayana: ArjunaJTS integration (atx)</description>
-
   <properties>
     <modular.jdk.args>--upgrade-module-path ${project.build.directory}/upgrademodulepath</modular.jdk.args>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -31,7 +24,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
@@ -107,24 +99,17 @@
       </exclusions>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <executions>
           <execution>
             <id>default-test</id>
+            <phase>test</phase>
             <goals>
               <goal>test</goal>
             </goals>
-            <phase>test</phase>
             <configuration>
               <useManifestOnlyJar>false</useManifestOnlyJar>
               <skip>true</skip>
@@ -135,20 +120,20 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <doCheck>false</doCheck>
           <doUpdate>false</doUpdate>
           <shortRevisionLength>5</shortRevisionLength>
           <revisionOnScmFailure>${project.version}-noscm</revisionOnScmFailure>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>create</goal>
-            </goals>
-            <phase>validate</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -158,32 +143,30 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-install-plugin</artifactId>
-            <inherited>false</inherited>
             <executions>
               <execution>
                 <id>default-install</id>
                 <phase>install</phase>
               </execution>
             </executions>
+            <inherited>false</inherited>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>create_javadocs</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
             <configuration>
               <source>8</source>
               <detectOfflineLinks>false</detectOfflineLinks>
             </configuration>
-            <executions>
-              <execution>
-                <id>create_javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-                <phase>prepare-package</phase>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>
@@ -198,10 +181,10 @@
             <executions>
               <execution>
                 <id>add-source</id>
+                <phase>process-sources</phase>
                 <goals>
                   <goal>add-source</goal>
                 </goals>
-                <phase>process-sources</phase>
                 <configuration>
                   <sources>
                     <source>${project.build.directory}/generated-sources/annotations/</source>
